@@ -3,6 +3,7 @@ import React from 'react'
 const Chatbox = () => {
     return (
         <>
+            <Navbar />
             <div className="flex-1 bg-white p-4">
                 <div className="h-full border border-gray-300 rounded-md p-4 flex flex-col justify-between">
                     <div className="flex-1 overflow-y-auto">
