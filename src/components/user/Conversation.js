@@ -5,15 +5,8 @@ const Conversation = ({ chats = [], currentuser }) => {
     console.log('CHATDATTA', chats)
     console.log("CURRENT USER0", currentuser)
     const [receivers, setreceivers] = useState([])
-    const chatlist = () => {
-        const newReceivers = chats?.reduce((receivers, chat) => {
-            const members = chat.members.filter(member => member !== currentuser._id);
-            console.log('Members:', members);
-            return [...receivers, ...members];
-        }, []);
 
-        setreceivers(newReceivers);
-    };
+
     console.log('RECEIVERLIST', receivers)
 
     const getReceiversdata = async () => {
@@ -30,12 +23,27 @@ const Conversation = ({ chats = [], currentuser }) => {
         }
     }
 
+    const chatlist = async () => {
+        const newReceivers = chats?.reduce((receivers, chat) => {
+            const members = chat.members.filter(member => member !== currentuser._id);
+            console.log('Members:', members);
+            return [...receivers, ...members];
+            //await getReceiversdata()
+        }, []);
+
+        setreceivers(newReceivers);
+    };
+
     useEffect(() => {
-        chatlist()
-        if (receivers.length > 0) {
-            getReceiversdata()
+        async function sample() {
+            await Promise.all([chatlist(), getReceiversdata()
+
+            ])
         }
-    }, [getReceiversdata])
+        sample()
+        // if (receivers) {
+        // }
+    }, [])
 
 
     return (

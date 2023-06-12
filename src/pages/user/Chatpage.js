@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Navbar from '../../components/user/Navbar'
-import Conversation from '../../components/user/Conversation'
+import Conversations2 from '../../components/user/Conversations2'
 import Chatbox from '../../components/user/Chatbox'
 import Chatdetails from '../../components/user/Chatdetails'
 import axios from 'axios'
@@ -54,8 +54,11 @@ const Chatpage = () => {
     const [chats, setChats] = useState([])
 
     useEffect(() => {
-        getChats()
+
         fetchProfile()
+    }, [])
+    useEffect(() => {
+        getChats()
     }, [])
 
     return (
@@ -63,13 +66,13 @@ const Chatpage = () => {
             <Navbar />
             <div className="flex h-screen">
                 {/* Left Section */}
-                <Conversation chats={chats} currentuser={user} />
-
+                {/* <Conversation chats={chats} currentuser={user} /> */}
+                <Conversations2 currentuser={user} chats={chats} />
                 {/* Middle Section */}
-                <Chatbox />
+                < Chatbox />
 
                 {/* Right Section */}
-                <Chatdetails />
+                < Chatdetails />
             </div>
 
         </>
