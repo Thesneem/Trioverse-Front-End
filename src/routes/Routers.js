@@ -29,6 +29,8 @@ import Packages from '../pages/admin/Packages';
 import Sellers from '../pages/admin/Sellers'
 import AdminPrivateRoutes from '../privateRoutes/AdminPrivateRoutes'
 import TestTable from '../components/user/TestTable';
+import BrowseCategories from '../pages/user/BrowseCategories';
+import AddRequirements from '../pages/user/AddRequirements';
 
 
 
@@ -45,6 +47,7 @@ const Routers = () => {
                 <Route exact path='/' element={<UserHome />} />
                 <Route exact path='/account' element={<TestTable />} />
                 <Route exact path='/kshome' element={<ProjectForm />} />
+                <Route exact path='/browse' element={<BrowseCategories />} />
                 <Route excat path='/viewListing/:id' element={<ViewListing />} />
 
                 <Route exact element={<UserPrivateRoutes type="user" />}>
@@ -56,6 +59,7 @@ const Routers = () => {
                     <Route exact path='/createListing' element={<CreateListing />} />
                     <Route exact path='/sellerListings' element={<SellerListings />} />
                     <Route exact path='/chatpage' element={<Chatpage />} />
+                    <Route exact path='/addRequirements' element={<AddRequirements />} />
                 </Route>
                 <Route path="*" element={<UserHome />} />
                 {/* ------------------------------------------------------------ */}
@@ -69,7 +73,7 @@ const Routers = () => {
                     <Route exact path='/admin/packages' element={<Packages />} />
                     <Route exact path='/admin/sellers' element={<Sellers />} />
                 </Route>
-            </Routes>
+            </Routes >
         </Router >
     )
 }

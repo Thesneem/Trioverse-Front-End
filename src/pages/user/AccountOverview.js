@@ -216,14 +216,27 @@ const AccountOverview = () => {
 
                             </div>
                             <div className='w-full sm:w-1/2 md:w-2/3 lg:w-3/4 xl:w-5/6'>
-                                <div className='flex justify-end mr-4 '>
-                                    <Link to="/createListing"><button className='btn btn-success hover:btn-warning'>Create a Listing</button></Link>
+
+                                {/* {!user?.isSellerProfile_set && (
+                                    <div className='flex justify-end mr-4'>
+                                        <Link to='/becomeASeller'>
+                                            <button className='btn btn-success hover:btn-warning'>Create Seller Profile</button>
+                                        </Link>
+                                    </div>
+                                )
+                                } */}
+                                <div>
+                                    <Link to='/createListing'>
+                                        <button className='btn btn-success hover:btn-warning'>Create A Listing</button>
+                                    </Link>
                                 </div>
+
                                 <div class="p-4 sm:ml-64">
                                     <div class="grid grid-cols-3 gap-4 mb-4">
                                         <div class="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800 hover:bg-green-800 transition duration-300">
                                             <p class="text-2xl text-gray-400 dark:text-gray-500 ">Change Password</p>
                                         </div>
+
                                         <Link to='/sellerprofile'><div class="flex items-center justify-center h-24 rounded bg-green-50 dark:bg-gray-800  hover:bg-green-800 transition duration-300" >
                                             < p class="text-2xl text-gray-400 dark:text-gray-500">Seller Profile</p>
                                         </div></Link>

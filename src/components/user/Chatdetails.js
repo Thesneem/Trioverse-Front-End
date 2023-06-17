@@ -3,7 +3,7 @@ import React from 'react'
 const Chatdetails = () => {
     return (
         <>
-            <div className="w-1/4 bg-gray-100 p-4">
+            <div className=" bg-gray-100 p-4">
                 {/* Order Details */}
                 <div>
                     <h3 className="text-lg font-bold mb-4">Order Details</h3>
