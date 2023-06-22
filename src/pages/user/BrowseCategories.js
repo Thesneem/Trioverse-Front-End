@@ -5,6 +5,7 @@ import { BASE_URL } from '../../config'
 import { Link, useNavigate } from 'react-router-dom'
 
 const BrowseCategories = () => {
+    const navigate = useNavigate()
     const [listings, setListings] = useState([])
     const fetchListings = async () => {
         try {
@@ -20,8 +21,9 @@ const BrowseCategories = () => {
         fetchListings()
     }, [])
 
-    const handleClick = () => {
-
+    const handleClick = (id) => {
+        console.log('listing ID', id)
+        navigate(`/viewListing/${id}`)
     }
 
     return (
@@ -56,9 +58,9 @@ const BrowseCategories = () => {
                                 // <SearchGridItem gig={gig} key={gig.id} />
 
                                 <div
-                                    className="max-w-[300px] flex flex-col gap-2 p-1 cursor-pointer mb-8"  >
+                                    className="max-w-[300px] flex flex-col gap-2 p-1 cursor-pointer mb-8" onClick={() => handleClick(listing._id)} >
 
-                                    <div className="relative w-64 h-40" >
+                                    <div className="relative w-64 h-40 " >
                                         <img
                                             src={`${BASE_URL}/public/uploads/listingImages/${listing.images[0]}`}
                                             alt="gig"
@@ -88,6 +90,7 @@ const BrowseCategories = () => {
                                         <span className="text-md ">
                                             <strong className="font-medium">{listing.seller_id.userName}</strong>
                                         </span>
+                                        <span className="ml-auto">{listing.listing_status}</span>
                                     </div>
                                     <div>
                                         <p className="line-clamp-2 text-[#404145]">{listing.listingTitle}</p>
@@ -100,7 +103,7 @@ const BrowseCategories = () => {
                                         <span className="text-[#74767e]">({gig.reviews.length})</span>
                                     </div>
                                     <div> */}
-                                    < strong className="font-medium" > From ${listing.price}</strong>
+                                    < strong className="font-medium" > From ${listing.packages[0].price}</strong>
                                 </div>
                                 // </div>
                             ))}

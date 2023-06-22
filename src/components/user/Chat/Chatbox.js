@@ -1,5 +1,6 @@
-import React, { useEffect, useState, useRef } from 'react'
-import { BASE_URL } from '../../config'
+import React, { useEffect, useState } from 'react'
+import { useRef } from 'react'
+import { BASE_URL } from '../../../config'
 import axios from 'axios'
 import { format } from "timeago.js";
 import InputEmoji from 'react-input-emoji'
@@ -16,6 +17,7 @@ const Chatbox = ({ chat, currentUser, setSendMessage, receivedMessage }) => {
         console.log("RECEIVERRR", receiver)
         setReceiverData(receiver)
     }
+
     useEffect(() => {
         if (chat !== null) {
             getReceiver()
@@ -98,7 +100,7 @@ const Chatbox = ({ chat, currentUser, setSendMessage, receivedMessage }) => {
     useEffect(() => {
         scroll.current?.scrollIntoView({ behavior: "smooth" });
     }, [messages])
-    ``
+        
 
 
 

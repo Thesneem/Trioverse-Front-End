@@ -836,7 +836,7 @@ const CreateListing = () => {
                                         id='coverImage'
                                         className={inputClassName}
                                         onChange={(e) => setFieldValue('coverImage', e.target.files[0])}
-                                        accept="image/jpeg, image/png, image/gif, image/jpg"
+                                        accept="image/jpeg, image/png, image/jpg"
                                         required
                                     />
                                 </div>

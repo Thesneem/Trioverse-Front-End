@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react'
 import Navbar from '../../components/user/Navbar'
-import Conversations2 from '../../components/user/Conversations2'
-import Chatbox from '../../components/user/Chatbox'
-import Chatdetails from '../../components/user/Chatdetails'
+import Conversations2 from '../../components/user/Chat/Conversations2'
+import Chatbox from '../../components/user/Chat/Chatbox'
+import Chatdetails from '../../components/user/Chat/Chatdetails'
 import axios from 'axios'
 import { io } from "socket.io-client";
 import { SOCKET_URL } from '../../config'

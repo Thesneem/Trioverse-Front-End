@@ -31,6 +31,7 @@ import AdminPrivateRoutes from '../privateRoutes/AdminPrivateRoutes'
 import TestTable from '../components/user/TestTable';
 import BrowseCategories from '../pages/user/BrowseCategories';
 import AddRequirements from '../pages/user/AddRequirements';
+import Checkout from '../pages/user/Checkout';
 
 
 
@@ -60,6 +61,7 @@ const Routers = () => {
                     <Route exact path='/sellerListings' element={<SellerListings />} />
                     <Route exact path='/chatpage' element={<Chatpage />} />
                     <Route exact path='/addRequirements' element={<AddRequirements />} />
+                    <Route exact path='/checkout' element={<Checkout />} />
                 </Route>
                 <Route path="*" element={<UserHome />} />
                 {/* ------------------------------------------------------------ */}

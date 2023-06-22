@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import Navbar from "../../components/user/Navbar";
-import ListingDetails from '../../components/user/ListingDetails';
-import ListingPricing from '../../components/user/ListingPricing';
+import ListingDetails from '../../components/user/Listing/ListingDetails';
+import ListingPricing from '../../components/user/Listing/ListingPricing';
 import { useSelector, useDispatch } from 'react-redux';
 import { setListingDetails } from '../../redux/listingSlice'
 import axios from 'axios'

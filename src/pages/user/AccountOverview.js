@@ -251,9 +251,9 @@ const AccountOverview = () => {
                                         <div class="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800  hover:bg-green-800 transition duration-300">
                                             <p class="text-2xl text-gray-400 dark:text-gray-500">My Sell Orders</p>
                                         </div>
-                                        <div class="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800  hover:bg-green-800 transition duration-300">
+                                        <Link to='/chatpage'> <div class="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800  hover:bg-green-800 transition duration-300">
                                             <p class="text-2xl text-gray-400 dark:text-gray-500">Chat</p>
-                                        </div>
+                                        </div></Link>
                                         <div class="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800  hover:bg-green-800 transition duration-300">
                                             <p class="text-2xl text-gray-400 dark:text-gray-500">Wallet</p>
                                         </div>

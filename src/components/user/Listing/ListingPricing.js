@@ -4,7 +4,7 @@ import { BiRightArrowAlt } from "react-icons/bi";
 import { BsCheckLg } from "react-icons/bs";
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom'
-import ChatModal from '../modals/ChatModal'
+import ChatModal from '../../modals/ChatModal'
 import axios from 'axios'
 
 
@@ -23,8 +23,8 @@ const ListingPricing = () => {
         setSelectedPackage(packageId);
     };
 
-    const handleContinue = (id) => {
-        navigate('/addRequirements', { state: { packageId: id } })
+    const handleContinue = (packageId, listingId) => {
+        navigate('/addRequirements', { state: { packageId, listingId } })
     }
 
     const handleChatModal = (id) => {
@@ -118,7 +118,7 @@ const ListingPricing = () => {
                             className="flex items-center bg-[#1DBF73] text-white py-2 justify-center font-bold text-lg relative rounded w-full"
                             // onClick={() => router.push(`/checkout?gigId=${gigData.id}`)}
                             disabled={!selectedPackage}
-                            onClick={(selectedPackage) => handleContinue}
+                            onClick={() => handleContinue(selectedPackage, listing._id)}
                         >
                             <span>Continue</span>
                             <BiRightArrowAlt className="text-2xl absolute right-4" />
