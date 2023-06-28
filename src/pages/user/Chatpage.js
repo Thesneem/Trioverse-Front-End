@@ -108,6 +108,8 @@ const Chatpage = () => {
         }
     }, [sendMessage]);
 
+
+    //for online status
     const checkOnlineStatus = (chat) => {
         const chatMember = chat.members.find((member) => member !== currentUser._id);
         const online = onlineUsers.find((user) => user.userId === chatMember);

@@ -18,6 +18,8 @@ import CreateListing from '../pages/user/CreateListing';
 import SellerListings from '../pages/user/SellerListings';
 import ViewListing from '../pages/user/ViewListing';
 import Chatpage from '../pages/user/Chatpage';
+import Checkout from '../pages/user/Checkout';
+import OrderSuccessPage from '../pages/user/OrderSuccessPage';
 import UserPrivateRoutes from '../privateRoutes/UserPrivateRoutes';
 
 import AdminLogin from '../pages/admin/AdminLogin';
@@ -31,7 +33,8 @@ import AdminPrivateRoutes from '../privateRoutes/AdminPrivateRoutes'
 import TestTable from '../components/user/TestTable';
 import BrowseCategories from '../pages/user/BrowseCategories';
 import AddRequirements from '../pages/user/AddRequirements';
-import Checkout from '../pages/user/Checkout';
+import BuyOrders from '../pages/user/BuyOrders';
+
 
 
 
@@ -62,6 +65,8 @@ const Routers = () => {
                     <Route exact path='/chatpage' element={<Chatpage />} />
                     <Route exact path='/addRequirements' element={<AddRequirements />} />
                     <Route exact path='/checkout' element={<Checkout />} />
+                    <Route exact path='/success' element={<OrderSuccessPage />} />
+                    <Route exact path='/buyOrders' element={<BuyOrders />} />
                 </Route>
                 <Route path="*" element={<UserHome />} />
                 {/* ------------------------------------------------------------ */}

@@ -10,7 +10,7 @@ const ListingDetails = () => {
 
     useEffect(() => {
         if (listing) {
-            setCurrentImage(listing.images[0]);
+            setCurrentImage(listing?.images[0]);
         }
     }, [listing]);
 
@@ -20,13 +20,13 @@ const ListingDetails = () => {
             {listing && (
                 <div className="col-span-2 flex flex-col gap-3">
                     <h2 className="text-2xl font-bold text-[#404145] mb-1">
-                        {listing.listingTitle} Title
+                        {listing?.listingTitle} Title
                     </h2>
                     <div className="flex items-center gap-2">
                         <div>
 
                             <img
-                                src={`${BASE_URL}/public/uploads/profilepics/${listing.seller_id.profile_pic}`}
+                                src={`${BASE_URL}/public/uploads/profilepics/${listing?.seller_id.profile_pic}`}
                                 alt="profile"
                                 height={50}
                                 width={50}
@@ -37,10 +37,13 @@ const ListingDetails = () => {
                         </div>
                         <div className="flex gap-2 items-center">
                             <h4 className="text-[#27272a] font-bold">
-                                {listing.seller_id.firstName} {listing.seller_id.lastName}
+                                {listing?.seller_id.firstName} {listing?.seller_id.lastName}
                             </h4>
                             <h6 className="text-[#74767e]">
-                                @{listing.seller_id.userName}
+                                @{listing?.seller_id.userName}
+                            </h6>
+                            <h6 className={`ml-8 ${listing?.listing_status === 'Available' ? 'text-green-500' : 'text-red-500'}`}>
+                                This listing is currently {listing?.listing_status}
                             </h6>
                         </div>
                         {/* <div className="flex items-center gap-1">
@@ -77,7 +80,7 @@ const ListingDetails = () => {
                         </div>
                         <div className="flex gap-4 flex-wrap">
 
-                            {listing.images.map((image) => (
+                            {listing?.images.map((image) => (
                                 // <img
                                 //     src={`${BASE_URL}/public/uploads/listingImages/${image}`}
                                 //     alt="gig"
@@ -108,7 +111,7 @@ const ListingDetails = () => {
                         </h3>
                         <div>
                             <p>
-                                {listing.description}
+                                {listing?.description}
                             </p>
                         </div>
                     </div>
@@ -120,7 +123,7 @@ const ListingDetails = () => {
                         <div className="flex gap-4">
                             <div>
                                 <img
-                                    src={`${BASE_URL}/public/uploads/profilepics/${listing.seller_id.profile_pic}`}
+                                    src={`${BASE_URL}/public/uploads/profilepics/${listing?.seller_id.profile_pic}`}
                                     alt="profile"
                                     height={50}
                                     width={50}
@@ -130,15 +133,15 @@ const ListingDetails = () => {
                             <div className="flex flex-col gap-1">
                                 <div className="flex  gap-2 items-center">
                                     <h4 className="font-medium text-lg">
-                                        {listing.seller_id.firstName} {listing.seller_id.lastName}
+                                        {listing?.seller_id.firstName} {listing?.seller_id.lastName}
                                     </h4>
                                     <span className="text-[#74767e]">
-                                        @{listing.seller_id.userName}
+                                        @{listing?.seller_id.userName}
                                     </span>
                                 </div>
                                 <div>
                                     <p>
-                                        {listing.seller_id.about}
+                                        {listing?.seller_id.about}
                                     </p>
                                 </div>
                                 <div className="flex items-center gap-1">

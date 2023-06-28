@@ -5,6 +5,17 @@ import {
     useStripe,
     useElements
 } from "@stripe/react-stripe-js";
+// import jwtDecode from "jwt-decode";
+
+// // Get the JWT token from the local storage
+// const token = localStorage.getItem("jwtToken");
+// // Decode the JWT token
+// if (token) {
+//     const decodedToken = jwtDecode(token);
+//     console.log(decodedToken);
+//     // Access the decoded token properties as needed
+
+// }
 
 export default function CheckoutForm() {
     const stripe = useStripe();
@@ -47,7 +58,7 @@ export default function CheckoutForm() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+        console.log('EMAIL', email)
         if (!stripe || !elements) {
             // Stripe.js hasn't yet loaded.
             // Make sure to disable form submission until Stripe.js has loaded.
@@ -60,8 +71,13 @@ export default function CheckoutForm() {
             elements,
             confirmParams: {
                 // Make sure to change this to your payment completion page
-                return_url: "http://localhost:3000/success",
+                return_url: window.location.origin + `/success?email=${encodeURIComponent(email)}`
             },
+            payment_method_options: {
+                link: {
+                    email: email
+                }
+            }
         });
 
         // This point will only be reached if there is an immediate error when
@@ -85,10 +101,10 @@ export default function CheckoutForm() {
 
     return (
 
-        < form id="payment-form" onSubmit={handleSubmit} className="w-96" >
+        <form id="payment-form" onSubmit={handleSubmit} className="w-96">
             < LinkAuthenticationElement
                 id="link-authentication-element"
-                onEmailChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => setEmail(e.target.value)}
 
             />
             < PaymentElement id="payment-element" options={paymentElementOptions} />

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Navbar from "../../components/user/Navbar";
 import ListingDetails from '../../components/user/Listing/ListingDetails';
 import ListingPricing from '../../components/user/Listing/ListingPricing';
@@ -10,10 +10,11 @@ import { setUserDetails } from '../../redux/userSlice'
 
 
 const ViewListing = () => {
+    const [order, setOrder] = useState('')
+
+    //getting id pssed as parameter 
     const { id } = useParams()
-
     console.log(id)
-
     const fetchListing = async () => {
         try {
             const response = await axios.get(`/getListing/${id}`, {
@@ -54,9 +55,31 @@ const ViewListing = () => {
         }
     }
 
+    //to check if an order exists for the current listing,we are fectching the order
+    const fetchOrder = async () => {
+        try {
+            const response = await axios.get(`/getActiveOrder/${id}`, {
+                headers: {
+                    'token': `Bearer ${localStorage.getItem('userToken')} `
+                }
+            },
+                {
+                    credentials: true
+                }
+
+            )
+            console.log('OrderResponse', response.data.order)
+            setOrder(response.data.order)
+        }
+        catch (err) {
+            console.log(err)
+        }
+    }
+
     useEffect(() => {
         fetchListing()
         fetchProfile()
+        fetchOrder()
     }, [])
 
     const { listing } = useSelector((state) => state.listing)
@@ -70,7 +93,7 @@ const ViewListing = () => {
             <Navbar />
             <div className="grid grid-cols-3 mx-32 gap-20">
                 <ListingDetails />
-                < ListingPricing />
+                < ListingPricing order={order} />
             </div>
         </div >
     )

@@ -1,9 +1,9 @@
 import React, { useEffect, useState, } from 'react'
-import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { requirmentSchema } from '../../../formSchemas/requirmentSchema';
 import { useFormik } from 'formik'
-
+import { useSelector, useDispatch } from 'react-redux';
+import { setRequirement, setFile } from '../../../redux/requirementsSlice';
 
 const initialValues = {
     requirement: '',
@@ -11,17 +11,23 @@ const initialValues = {
 }
 
 const RequirementsAdd = () => {
-
+    const dispatch = useDispatch()
     const navigate = useNavigate()
     const { listing } = useSelector((state) => state.listing)
-    const [requirements, setRequirements] = useState('')
-    const [file, setFile] = useState([])
+    // const [requirements, setRequirements] = useState('')
+    // const [file, setFile] = useState([])
+    const requirements = useSelector((state) => state.requirement)
+    const file = useSelector((state) => state.file)
+
+    console.log("REQUIREMENTSS", requirements, file)
 
     const redirect = () => {
         if (!listing) {
             const storedListingId = sessionStorage.getItem('listingId');
+
             if (storedListingId) {
                 navigate(`/viewListing/${storedListingId}`);
+
             } else {
                 navigate('/home');
             }
@@ -45,9 +51,9 @@ const RequirementsAdd = () => {
         initialValues,
         validationSchema: requirmentSchema,
         onSubmit: (values, action) => {
-            setRequirements(values.requirement)
-            setFile(values.attachement)
-            console.log(requirements, file)
+            dispatch(setRequirement(values.requirement));
+            dispatch(setFile(values.attachement));
+
         }
 
     })

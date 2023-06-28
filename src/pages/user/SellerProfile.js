@@ -81,7 +81,7 @@ const SellerProfile = () => {
                         </Link></li>
                     <li className={`step ${user?.isSellerProfile_set ? 'step-success' : ''} mr-2`}>Set seller profile</li>
                     <li className={`step ${user?.sellerProfileStatus.approved.state ? 'step-success' : ''} mr-2`}> Approval of seller Profile</li>
-                    <li className={`step ${user?.sellerProfileStatus.approved.state ? 'step-success' : ''} mr-2`}>You're a seller Now</li>
+                    <li className={`step ${user?.sellerProfileStatus.approved.state ? 'step-success' : ''} mr-2`}>You're a seller Now.You can create your Listings</li>
                 </ul>
             </div >
             {/* <div>

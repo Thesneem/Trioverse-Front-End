@@ -3,6 +3,7 @@ import Navbar from '../../components/user/Navbar'
 import axios from 'axios'
 import { BASE_URL } from '../../config'
 import { Link, useNavigate } from 'react-router-dom'
+import { FcApproval, FcCancel } from "react-icons/fc";
 
 const BrowseCategories = () => {
     const navigate = useNavigate()
@@ -50,19 +51,19 @@ const BrowseCategories = () => {
                     <div>
                         <div className="my-4">
                             <span className="text-[#74767e] font-medium ">
-                                {listings.length} services available
+                                {listings?.length} services available
                             </span>
                         </div>
                         <div className="grid grid-cols-4">
-                            {listings.map((listing) => (
+                            {listings?.map((listing) => (
                                 // <SearchGridItem gig={gig} key={gig.id} />
 
                                 <div
-                                    className="max-w-[300px] flex flex-col gap-2 p-1 cursor-pointer mb-8" onClick={() => handleClick(listing._id)} >
+                                    className="max-w-[300px] flex flex-col gap-2 p-1 cursor-pointer mb-8" onClick={() => handleClick(listing?._id)} >
 
                                     <div className="relative w-64 h-40 " >
                                         <img
-                                            src={`${BASE_URL}/public/uploads/listingImages/${listing.images[0]}`}
+                                            src={`${BASE_URL}/public/uploads/listingImages/${listing?.images[0]}`}
                                             alt="gig"
                                             fill
                                             className="rounded-xl"
@@ -72,7 +73,7 @@ const BrowseCategories = () => {
                                         <div>
                                             {listing?.seller_id?.profile_pic &&
                                                 < img
-                                                    src={`${BASE_URL}/public/uploads/profilepics/${listing.seller_id.profile_pic}`}
+                                                    src={`${BASE_URL}/public/uploads/profilepics/${listing?.seller_id.profile_pic}`}
                                                     alt="profile"
                                                     height={30}
                                                     width={30}
@@ -88,12 +89,12 @@ const BrowseCategories = () => {
                                             // )} */}
                                         </div>
                                         <span className="text-md ">
-                                            <strong className="font-medium">{listing.seller_id.userName}</strong>
+                                            <strong className="font-medium">{listing?.seller_id.userName}</strong>
                                         </span>
-                                        <span className="ml-auto">{listing.listing_status}</span>
+                                        <span className="ml-auto">{listing?.listing_status === 'Available' ? <FcApproval /> : <FcCancel />}</span>
                                     </div>
                                     <div>
-                                        <p className="line-clamp-2 text-[#404145]">{listing.listingTitle}</p>
+                                        <p className="line-clamp-2 text-[#404145]">{listing?.listingTitle}</p>
                                     </div>
                                     {/* <div className="flex items-center gap-1 text-yellow-400">
                                         <FaStar />

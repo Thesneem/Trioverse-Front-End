@@ -4,6 +4,7 @@ import { FiClock, FiRefreshCcw } from "react-icons/fi";
 import { BiRightArrowAlt } from "react-icons/bi";
 import { useNavigate } from 'react-router-dom';
 
+
 const SelectedDetails = ({ selectedPackage }) => {
     const navigate = useNavigate()
     const { listing } = useSelector((state) => state.listing)
@@ -11,9 +12,17 @@ const SelectedDetails = ({ selectedPackage }) => {
     const item = listing.packages.find((data) => data._id === selectedPackage)
     console.log('this is item', item)
 
+    //getting requirements
+    const { requirement, file } = useSelector((state) => ({
+        requirement: state.requirements.requirement,
+        file: state.requirements.file,
+    }));
+    console.log('REquiremnts got from store', requirement, file)
+
     const handleProceedPayment = () => {
         console.log('nhjhj')
-        navigate('/checkout')
+        //pass the requirements,listing and file as state in the url and get it with the help of uselocation hook in the navigating page
+        navigate('/checkout', { state: { requirement, file, listing,item } })
     }
 
     return (
