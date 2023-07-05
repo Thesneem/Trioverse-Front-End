@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Navbar from '../../components/user/Navbar'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 
 
-const BuyOrders = () => {
-    const [buyOrders, setBuyOrders] = useState()
-    const fetchBuyOrders = async () => {
+const SellOrders = () => {
+    const [sellOrders, setSellOrders] = useState()
+    const fetchSellOrders = async () => {
         try {
-            const response = await axios.get(`/allBuyOrders`, {
+            const response = await axios.get(`/allSellOrders`, {
                 headers: {
                     'token': `Bearer ${localStorage.getItem('userToken')} `
                 }
@@ -17,14 +17,14 @@ const BuyOrders = () => {
                     credentials: true
                 })
             console.log(response)
-            setBuyOrders(response.data.orders)
+            setSellOrders(response.data.orders)
         }
         catch (err) {
             console.log(err)
         }
     }
     useEffect(() => {
-        fetchBuyOrders()
+        fetchSellOrders()
     }, [])
 
     const formatDate = (dateString) => {
@@ -51,13 +51,12 @@ const BuyOrders = () => {
         }
     }
 
-
     return (
         <>
             <Navbar />
-            {buyOrders && (
+            {sellOrders && (
                 <div className="min-h-[80vh] my-10 mt-0 px-32">
-                    <h3 className="m-5 text-2xl font-semibold">All your Buy Orders</h3>
+                    <h3 className="m-5 text-2xl font-semibold">All your Sell Orders</h3>
                     <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
                         <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                             <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -89,7 +88,7 @@ const BuyOrders = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {buyOrders.map((order) => {
+                                {sellOrders.map((order) => {
                                     return (
                                         <tr
                                             className="bg-white dark:bg-gray-800 hover:bg-gray-50"
@@ -111,7 +110,7 @@ const BuyOrders = () => {
                                                     href={`/buyer/orders/messages/${order.id}`}
                                                     className="font-medium text-blue-600  hover:underline"
                                                 >
-                                                    Chat with {order.seller_id.userName}
+                                                    Chat with {order.buyer_id.userName}
                                                 </Link>
                                             </td>
                                             {orderStatus(order)}
@@ -131,4 +130,4 @@ const BuyOrders = () => {
     )
 }
 
-export default BuyOrders
+export default SellOrders

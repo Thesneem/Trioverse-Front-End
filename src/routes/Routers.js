@@ -35,6 +35,7 @@ import AdminPrivateRoutes from '../privateRoutes/AdminPrivateRoutes'
 import TestTable from '../components/user/TestTable';
 import BrowseCategories from '../pages/user/BrowseCategories';
 import AddRequirements from '../pages/user/AddRequirements';
+import SellOrders from '../pages/user/SellOrders';
 
 
 
@@ -69,6 +70,7 @@ const Routers = () => {
                     <Route exact path='/success' element={<OrderSuccessPage />} />
                     <Route exact path='/buyOrders' element={<BuyOrders />} />
                     <Route exact path='/viewOrder/:id' element={<ViewOrder />} />
+                    <Route exact path='/sellOrders' element={<SellOrders />} />
                 </Route>
                 <Route path="*" element={<UserHome />} />
                 {/* ------------------------------------------------------------ */}
