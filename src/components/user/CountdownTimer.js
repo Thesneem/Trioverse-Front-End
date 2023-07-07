@@ -1,18 +1,28 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 
-const CountdownTimer = ({ totalTime }) => {
+const CountdownTimer = ({ totalTime, deliveryStatus }) => {
     const [remainingTime, setRemainingTime] = useState(totalTime);
 
+    const intervalRef = useRef(null)
     useEffect(() => {
         //to stop timer on zero values if condition is put
         if (totalTime > -1) {
-            const interval = setInterval(() => {
+            intervalRef.current = setInterval(() => {
                 setRemainingTime(prevTime => prevTime - 1000);
             }, 1000);
 
-            return () => clearInterval(interval);
+            return () => clearInterval(intervalRef.current);
         }
-    }, [totalTime]);
+    }, [totalTime, deliveryStatus]);
+
+
+    useEffect(() => {
+        if (deliveryStatus) {
+            // Perform any necessary actions when deliveryStatus becomes truthy
+            // For example, you can stop the timer, display a message, etc.
+            clearInterval(intervalRef.current);
+        }
+    }, [deliveryStatus]);
 
     // Calculate the days, hours, minutes, and seconds from remainingTime
     const days = Math.floor(remainingTime / (24 * 60 * 60 * 1000));

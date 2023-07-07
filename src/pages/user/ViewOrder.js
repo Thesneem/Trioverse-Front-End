@@ -6,14 +6,22 @@ import { BASE_URL } from '../../config'
 import jwt_decode from 'jwt-decode';
 import StartOrderModal from '../../components/modals/StartOrderModal'
 import CountdownTimer from '../../components/user/CountdownTimer'
+import DeliverOrderModal from '../../components/modals/DeliverOrderModal'
+import { useFormik } from 'formik'
+import { deliverOrderSchema } from '../../formSchemas/deliverOrderSchema'
+import { FiXSquare } from "react-icons/fi";
 
+const initialValues = {
+    deliveryMessage: '',
+    deliveryItem: ''
+}
 
 
 const ViewOrder = () => {
     const [order, setOrder] = useState('')
     const [showStartOrderModal, setShowStartOrderModal] = useState(false);
-
-
+    const [showDeliverOrderModal, setShowDeliverOrderModal] = useState(false)
+    const [showImagePopup, setShowImagePopup] = useState(false)
     // Retrieve the JWT token from local storage
     const token = localStorage.getItem('userToken');
 
@@ -46,6 +54,17 @@ const ViewOrder = () => {
         fetchOrder()
     }, [])
 
+
+    // useEffect(() => {
+    //     const interval = setInterval(() => {
+    //         fetchOrder();
+    //     }, 5000); // Polling interval of 5 seconds (adjust as needed)
+
+    //     return () => {
+    //         clearInterval(interval);
+    //     };
+    // }, []);
+
     //to format date
     const formatDate = (dateString) => {
         const date = new Date(dateString);
@@ -63,6 +82,12 @@ const ViewOrder = () => {
         else if (order?.order_Status?.finished?.state) {
             return < span className='text-green-500 ml-2' > Finished</span >
         }
+        else if (order?.order_Status?.returned?.state) {
+            return < span className='text-orange-500 ml-2' > Returned</span >
+        }
+        else if (order?.order_Status?.delivered?.state) {
+            return < span className='text-purple-500 ml-2' > Delivered</span >
+        }
         else if (order?.order_Status?.started?.state) {
             return < span className='text-blue-500 ml-2' > Started</span >
         }
@@ -71,6 +96,7 @@ const ViewOrder = () => {
         }
     }
 
+    //start order modal 
     const handleShowStartOrderModal = () => {
         setShowStartOrderModal(true)
     }
@@ -89,18 +115,67 @@ const ViewOrder = () => {
         }
     }
 
+    //below function calculates the time to be show in the countdown timer componenet
     const calculateTime = () => {
         if (order?.order_Status?.started) {
             const currentTime = Date.now();
             const elapsedTime = currentTime - new Date(order?.order_Status?.started?.date).getTime();
-            const remainingTime = (order.selected_Package.delivery_Time * 24 * 60 * 60 * 1000) - elapsedTime;
+            const remainingTime = (order?.selected_Package?.delivery_Time * 24 * 60 * 60 * 1000) - elapsedTime;
             console.log(remainingTime)
             return remainingTime
         }
         return 0
     }
-    // Store the calculated remaining time in a variable
+    // Store the calculated remaining time in a variable, so that it can be used furthur
     const remainingTime = calculateTime();
+
+    //deliver order modal operations
+
+    const { values, errors, touched, handleBlur, handleChange, handleSubmit, setFieldValue } =
+        useFormik({
+            initialValues,
+            validationSchema: deliverOrderSchema,
+            onSubmit: async (values, action) => {
+                try {
+                    console.log('TESTTT')
+                    const response = await axios.post(`/deliverOrder/${order?._id}`, values, {
+                        headers: {
+                            "Content-Type": "multipart/form-data",
+                            'token': `Bearer ${localStorage.getItem('userToken')} `
+                        }
+                    })
+                    console.log(response)
+                    setShowDeliverOrderModal(false)
+                    fetchOrder()
+                }
+                catch (err) {
+                    console.log(err)
+                }
+            }
+        });
+
+    const handleShowDeliverOrderModal = () => {
+
+        setShowDeliverOrderModal(true)
+    }
+    const handleCloseDeliverOrderModal = () => {
+        setShowDeliverOrderModal(false)
+    }
+
+
+    //below function is for downloading deliveryitem
+    const download = async (item) => {
+        try {
+            const response = await axios.get(`/download/${item}`, {
+                headers: { 'Content-Type': 'application/json' },
+
+            })
+            console.log(response)
+        }
+        catch (err) {
+            console.log(err)
+        }
+    }
 
     return (
         <>
@@ -156,15 +231,17 @@ const ViewOrder = () => {
                                     </tr>
                                 </tbody>
                             </table>
-                            {!order?.order_Status?.started?.state && (
-                                <div className='ml-auto'>
-                                    <button className='btn btn-success hover:bg-yellow-400 ' onClick={handleShowStartOrderModal}>Start working on the Order</button>
-                                </div>
+                            {order?.seller_id?._id === user && (
+                                !order?.order_Status?.started?.state && (
+                                    <div className='ml-auto'>
+                                        <button className='btn btn-success hover:bg-yellow-400 ' onClick={handleShowStartOrderModal}>Start working on the Order</button>
+                                    </div>
+                                )
                             )}
                             {order?.order_Status?.started?.state && (
                                 < div className='ml-auto'>
-                                    {/* {remainingTime} */}
-                                    <CountdownTimer totalTime={remainingTime} />
+                                    {/* {remainingTime} deliverystats is shared as props so that to stop timer*/}
+                                    <CountdownTimer totalTime={remainingTime} deliveryStatus={order?.order_Status?.delivered?.state ? order.order_Status.delivered.state : null} />
                                 </div>
                             )}
                         </div>
@@ -173,29 +250,74 @@ const ViewOrder = () => {
                         <div className='my-2 flex gap-3'>
                             <div>
                                 <h2 className='font-bold'>Order Requirements</h2>
-                                <p>"{order.listing_id.requirements}"</p>
+                                <p>"{order?.listing_id?.requirements}"</p>
                                 <h2 className='font-bold'>Provided Data</h2>
-                                <p>{order.order_requirements.requirements}</p>
-                                {order.order_requirements.file && (
-                                    <img src={`${BASE_URL}/public/uploads/profilepics/${order.order_requirements.file}`} alt="Order File" className='mb-2' />
+                                <p >{order?.order_requirements?.requirements}</p>
+                                <p className='text-blue-500 hover:text-blue-900 cursor-pointer' onClick={() => setShowImagePopup(true)}>{order?.order_requirements?.file}</p>
+                                {/* Popup */}
+                                {showImagePopup && (
+                                    <>
+                                        <div className="fixed top-0 left-0 w-screen h-screen bg-gray-800 opacity-75 z-40"></div>
+                                        <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-6 z-50">
+                                            <span className='hover:cursor-pointer' onClick={() => setShowImagePopup(false)}><FiXSquare /></span>
+                                            <img src={`${BASE_URL}/public/uploads/profilepics/${order?.order_requirements?.file}`} alt="Order File" />
+                                        </div>
+                                    </>
                                 )}
                             </div>
-                            {/* if there is remaining time for delivery and status is not finished show deliver button else danger message */}
-                            {!order?.order_Status?.finished?.state && remainingTime > 0 ? (
-                                <div className='ml-auto'>
-                                    <button className='btn btn-success hover:bg-yellow-400 ' >Deliver Order</button>
-                                </div>
-                            ) : (<div className="alert alert-error">
-                                <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
-                                <span>Attention: Failed to deliver order on time! Admin will take action</span>
-                            </div>)}
+                            {order?.seller_id?._id === user && (
+                                /* if there is remaining time for delivery and status is not finished show deliver button else danger message */
+                                order?.order_Status?.started?.state && !order?.order_Status?.delivered?.state && remainingTime > 0 && (
+                                    < div className='ml-auto'>
+                                        <button className='btn btn-success hover:bg-yellow-400 ' onClick={handleShowDeliverOrderModal} >Deliver Order</button>
+                                    </div>
+                                ))}
+
+
+                            {order?.seller_id?._id === user && (
+                                /*order is started but not delivered and timer is up*/
+                                order?.order_Status?.started?.state && !order?.order_Status?.delivered?.state && remainingTime <= 0 && (
+                                    < div className="alert alert-error text-red-500">
+                                        <span>Attention: Failed to deliver order on time! Admin will take action</span>
+                                    </div>)
+                            )}
                         </div>
                         <hr />
+                        <div>
+                            {/* Here we show the order delivery history*/}
+                            {order?.order_Status?.delivered?.state && order?.order_Status?.delivered?.details.map((detail, index) => (
+                                <div key={index}>
+                                    <h2 className='font-bold my-2'>Order delivery Data</h2>
+                                    <p>{detail.delivery_Message}</p>
+                                    <p>{detail.date}</p>
+                                    <ul>
+                                        {detail.delivery_item.map((item, i) => (
+                                            <li key={i}>
+                                                <button className='btn btn-sm' onClick={() => download(item)}>Download file</button>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            ))}
+                        </div>
                         <StartOrderModal
                             showStartOrderModal={showStartOrderModal}
                             handleCloseStartOrderModal={handleCloseStartOrderModal}
                             handleStartOrder={handleStartOrder}
                         />
+
+                        <DeliverOrderModal
+                            showDeliverOrderModal={showDeliverOrderModal}
+                            handleCloseDeliverOrderModal={handleCloseDeliverOrderModal}
+                            handleBlur={handleBlur}
+                            handleChange={handleChange}
+                            handleSubmit={handleSubmit}
+                            values={values}
+                            errors={errors}
+                            touched={touched}
+                            setFieldValue={setFieldValue}
+                        />
+
                     </div >
 
                 </div >

@@ -37,13 +37,19 @@ const BuyOrders = () => {
 
     //to get order status
     function orderStatus(order) {
-        if (order.order_Status.canceled.state) {
+        if (order?.order_Status?.canceled?.state) {
             return <td className="px-6 py-4 text-red-500">Cancelled</td>
         }
-        else if (order.order_Status.finished.state) {
+        else if (order?.order_Status?.finished?.state) {
             return <td className="px-6 py-4 text-green-500">Finished</td>
         }
-        else if (order.order_Status.started.state) {
+        else if (order?.order_Status?.returned?.state) {
+            return < span className='text-orange-500 ml-2' > Returned</span >
+        }
+        else if (order?.order_Status?.delivered?.state) {
+            return < span className='text-purple-500 ml-2' > Delivered</span >
+        }
+        else if (order?.order_Status?.started?.state) {
             return <td className="px-6 py-4 text-blue-500">Started</td>
         }
         else {
