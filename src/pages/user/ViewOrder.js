@@ -162,20 +162,93 @@ const ViewOrder = () => {
         setShowDeliverOrderModal(false)
     }
 
-
+    //below function to determine the file extension
+    const getFileExtension = (filename) => {
+        const parts = filename.split('.');
+        return parts[parts.length - 1].toLowerCase();
+    };
     //below function is for downloading deliveryitem
     const download = async (item) => {
         try {
             const response = await axios.get(`/download/${item}`, {
-                headers: { 'Content-Type': 'application/json' },
-
+                headers: { 'Content-Type': `${getFileExtension(item)}` },
+                responseType: "blob"
             })
             console.log(response)
+            // Create a temporary URL for the downloaded file
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+
+            // Create a link element
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = item; // Set the download attribute to the item (filename)
+            document.body.appendChild(link);
+
+            // Trigger the click event on the link to start the download
+            link.click();
+
+            // Clean up by removing the link and revoking the URL
+            document.body.removeChild(link);
+            window.URL.revokeObjectURL(url);
         }
         catch (err) {
             console.log(err)
         }
     }
+
+
+    //to do the delivery acceptance
+    const handleAccept = async () => {
+        try {
+            const response = await axios.put(`/acceptDelivery/${order?._id}`)
+            console.log(response)
+            fetchOrder()
+        }
+        catch (err) {
+            console.log(err)
+        }
+    }
+
+    //to do the delivery Return
+    const handleReturn = async () => {
+        try {
+            const response = await axios.put(`/returnDelivery/${order?._id}`)
+            console.log(response)
+            fetchOrder()
+        }
+        catch (err) {
+            console.log(err)
+        }
+    }
+
+
+    //function to decide which button to be shown in delivery details section
+    const showButton = () => {
+        let deliveryLength = order?.order_Status?.delivered?.details?.length
+        let returnLength = order?.order_Status?.returned?.details?.length
+        console.log('testlength', deliveryLength, returnLength)
+        if (order?.seller_id?._id === user) {
+            if (!order?.order_Status?.finished.state && returnLength >= deliveryLength) {
+                return <button className='btn btn-info '> Deliver</button >
+
+            }
+        }
+        else {
+            if (!order?.order_Status?.finished.state) {
+                return (
+                    <>
+                        <p>If the delivered item is okay,please accept it</p>
+                        < div className='flex gap-5 my-5'>
+                            <button className='btn btn-primary' onClick={handleAccept}>Accept</button>
+                            {returnLength <= order?.selected_Package?.revisions && (
+                                < button className='btn btn-secondary' onClick={handleReturn}>Return</button>)
+                            }
+                        </div >
+                    </>)
+            }
+        }
+    }
+
 
     return (
         <>
@@ -283,22 +356,65 @@ const ViewOrder = () => {
                             )}
                         </div>
                         <hr />
+                        {/* <div>
+                           
+                            {Array.isArray(order?.order_Status?.delivered?.details) && order.order_Status.delivered.details.length > 0
+                                && order?.order_Status?.delivered?.details.map((detail, index) => (
+                                    <div className='mb-2 flex gap-3 my-2' >
+                                        <div key={index}>
+                                            <h2 className='font-bold my-2'>Order delivery Data</h2>
+                                            <p className='font-semibold'>Order Delivery Message:"{detail.delivery_Message}"</p>
+                                            <p className='font-semibold'>Order Delivery Date:{formatDate(detail.date)}</p>
+                                            <p className='font-semibold'>Delivered file:</p>
+                                            <ul>
+                                                {detail.delivery_item.map((item, i) => (
+                                                    <li key={i}>
+                                                        <span>    {item}</span>
+                                                        <button className='btn btn-sm' onClick={() => download(item)}>Download file</button>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </div>
+                                        <div className='ml-auto flex gap-5 my-3'>
+                                            <button className='btn btn-primary '>Accept</button>
+                                            <button className='btn btn-secondary'>Return</button>
+                                        </div>
+                                    </div>
+                                ))}
+                        </div> */}
                         <div>
-                            {/* Here we show the order delivery history*/}
-                            {order?.order_Status?.delivered?.state && order?.order_Status?.delivered?.details.map((detail, index) => (
-                                <div key={index}>
-                                    <h2 className='font-bold my-2'>Order delivery Data</h2>
-                                    <p>{detail.delivery_Message}</p>
-                                    <p>{detail.date}</p>
-                                    <ul>
-                                        {detail.delivery_item.map((item, i) => (
-                                            <li key={i}>
-                                                <button className='btn btn-sm' onClick={() => download(item)}>Download file</button>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </div>
-                            ))}
+                            {Array.isArray(order?.order_Status?.delivered?.details) && order.order_Status.delivered.details.length > 0
+                                && (
+                                    <div>
+                                        <h2 className='font-bold my-2'>Order delivery Data</h2>
+                                        <ul>
+                                            {order?.order_Status?.delivered?.details.map((detail, index) => (
+                                                <li key={index}>
+                                                    <p className='font-semibold'>Order Delivery Message:"{detail.delivery_Message}"</p>
+                                                    <p className='font-semibold'>Order Delivery Date:{formatDate(detail.date)}</p>
+                                                    <p className='font-semibold'>Delivered file:</p>
+                                                    <ul>
+                                                        {detail.delivery_item.map((item, i) => (
+                                                            <li key={i}>
+                                                                <span>    {item}</span>
+                                                                <button className='btn btn-sm' onClick={() => download(item)}>Download file</button>
+                                                            </li>
+                                                        ))}
+                                                    </ul>
+                                                    {order?.order_Status?.returned?.details[index] && (
+                                                        <div>
+                                                            <p>Return Date: {order?.order_Status?.returned?.details[index].date}</p>
+                                                            <p>Return Message: {order?.order_Status?.returned?.details[index].return_Message}</p>
+                                                        </div>
+                                                    )}
+                                                </li>
+                                            ))}
+                                        </ul>
+                                        <div className='ml-auto flex gap-5 my-3'>
+                                            {showButton()}
+                                        </div>
+                                    </div>
+                                )}
                         </div>
                         <StartOrderModal
                             showStartOrderModal={showStartOrderModal}
