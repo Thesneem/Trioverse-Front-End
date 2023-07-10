@@ -10,6 +10,8 @@ import DeliverOrderModal from '../../components/modals/DeliverOrderModal'
 import { useFormik } from 'formik'
 import { deliverOrderSchema } from '../../formSchemas/deliverOrderSchema'
 import { FiXSquare } from "react-icons/fi";
+import { returnDeliverySchema } from '../../formSchemas/returnDeliverySchema'
+import ReturnDeliveryModal from '../../components/modals/ReturnDeiveryModal'
 
 const initialValues = {
     deliveryMessage: '',
@@ -22,6 +24,7 @@ const ViewOrder = () => {
     const [showStartOrderModal, setShowStartOrderModal] = useState(false);
     const [showDeliverOrderModal, setShowDeliverOrderModal] = useState(false)
     const [showImagePopup, setShowImagePopup] = useState(false)
+    const [showReturnModal, setShowReturnModal] = useState(false)
     // Retrieve the JWT token from local storage
     const token = localStorage.getItem('userToken');
 
@@ -209,17 +212,16 @@ const ViewOrder = () => {
         }
     }
 
-    //to do the delivery Return
-    const handleReturn = async () => {
-        try {
-            const response = await axios.put(`/returnDelivery/${order?._id}`)
-            console.log(response)
-            fetchOrder()
-        }
-        catch (err) {
-            console.log(err)
-        }
+    //return delivery modal
+    const handleShowReturnModal = () => {
+        setShowReturnModal(true)
     }
+    const handleCloseReturnDeliveryModal = () => {
+        setShowReturnModal(false)
+        // action.resetForm();
+    }
+
+
 
 
     //function to decide which button to be shown in delivery details section
@@ -227,21 +229,21 @@ const ViewOrder = () => {
         let deliveryLength = order?.order_Status?.delivered?.details?.length
         let returnLength = order?.order_Status?.returned?.details?.length
         console.log('testlength', deliveryLength, returnLength)
-        if (order?.seller_id?._id === user) {
-            if (!order?.order_Status?.finished.state && returnLength >= deliveryLength) {
-                return <button className='btn btn-info '> Deliver</button >
+        if (order?.buyer_id?._id === user) {
+            //     if (!order?.order_Status?.finished.state && returnLength >= deliveryLength) {
+            //         return <button className='btn btn-info '> Deliver</button >
 
-            }
-        }
-        else {
-            if (!order?.order_Status?.finished.state) {
+            //     }
+            // }
+            // else {
+            if (!order?.order_Status?.finished.state && order?.order_Status?.delivered?.state) {
                 return (
                     <>
                         <p>If the delivered item is okay,please accept it</p>
                         < div className='flex gap-5 my-5'>
                             <button className='btn btn-primary' onClick={handleAccept}>Accept</button>
-                            {returnLength <= order?.selected_Package?.revisions && (
-                                < button className='btn btn-secondary' onClick={handleReturn}>Return</button>)
+                            {returnLength < order?.selected_Package?.revisions && (
+                                < button className='btn btn-secondary' onClick={handleShowReturnModal}>Return</button>)
                             }
                         </div >
                     </>)
@@ -311,9 +313,10 @@ const ViewOrder = () => {
                                     </div>
                                 )
                             )}
-                            {order?.order_Status?.started?.state && (
+                            {/* do not show timer if the status is delivered/returned/finished/cancelled */}
+                            {order?.order_Status?.started?.state && !(order?.order_Status?.delivered?.state || order?.order_Status?.returned?.state || order?.order_Status?.finished?.state || order?.order_Status?.canceled?.state) && (
                                 < div className='ml-auto'>
-                                    {/* {remainingTime} deliverystats is shared as props so that to stop timer*/}
+                                    {/* {remainingTime} deliverystats is shared as props so that to stop timer but currently not working proeprly may remove the prop*/}
                                     <CountdownTimer totalTime={remainingTime} deliveryStatus={order?.order_Status?.delivered?.state ? order.order_Status.delivered.state : null} />
                                 </div>
                             )}
@@ -390,21 +393,27 @@ const ViewOrder = () => {
                                         <ul>
                                             {order?.order_Status?.delivered?.details.map((detail, index) => (
                                                 <li key={index}>
-                                                    <p className='font-semibold'>Order Delivery Message:"{detail.delivery_Message}"</p>
-                                                    <p className='font-semibold'>Order Delivery Date:{formatDate(detail.date)}</p>
-                                                    <p className='font-semibold'>Delivered file:</p>
+                                                    <p ><span className='font-semibold text-green-600'>Order Delivery Message:</span>"{detail.delivery_Message}"</p>
+                                                    <p ><span className='font-semibold text-green-600'>Order Delivery Date:</span>{formatDate(detail.date)}</p>
+                                                    <p ><span className='font-semibold text-green-600'>Delivered file:</span></p>
                                                     <ul>
                                                         {detail.delivery_item.map((item, i) => (
+
                                                             <li key={i}>
-                                                                <span>    {item}</span>
-                                                                <button className='btn btn-sm' onClick={() => download(item)}>Download file</button>
+                                                                <div className='flex gap-3'>
+                                                                    <span className='text-blue-500'>    {item}</span>
+                                                                    <button className='btn btn-sm ml-auto' onClick={() => download(item)}>Download file</button>
+                                                                </div>
                                                             </li>
+
                                                         ))}
                                                     </ul>
                                                     {order?.order_Status?.returned?.details[index] && (
                                                         <div>
-                                                            <p>Return Date: {order?.order_Status?.returned?.details[index].date}</p>
-                                                            <p>Return Message: {order?.order_Status?.returned?.details[index].return_Message}</p>
+                                                            <hr className='my-3' />
+                                                            <p><span className='text-red-600'>Return Date:</span> {formatDate(order?.order_Status?.returned?.details[index].date)}</p>
+                                                            <p><span className='text-red-600'>Return Message:</span> {order?.order_Status?.returned?.details[index].return_Message}</p>
+                                                            <hr className='my-3' />
                                                         </div>
                                                     )}
                                                 </li>
@@ -432,6 +441,13 @@ const ViewOrder = () => {
                             errors={errors}
                             touched={touched}
                             setFieldValue={setFieldValue}
+                        />
+                        <ReturnDeliveryModal
+                            id={order?._id}
+                            //handleReturnDelivery={handleReturnDelivery}
+                            handleCloseReturnDeliveryModal={handleCloseReturnDeliveryModal}
+                            showReturnModal={showReturnModal}
+                            setShowReturnModal={setShowReturnModal}
                         />
 
                     </div >

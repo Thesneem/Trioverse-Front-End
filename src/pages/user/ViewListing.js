@@ -10,7 +10,9 @@ import { setUserDetails } from '../../redux/userSlice'
 
 
 const ViewListing = () => {
-    const [order, setOrder] = useState('')
+    const [activeOrder, setActiveOrder] = useState('')
+    //to check if there is finished/canceled orders, then show add review portion 
+    const [hasOrdered, setHasOrdered] = useState(false)
 
     //getting id pssed as parameter 
     const { id } = useParams()
@@ -56,7 +58,7 @@ const ViewListing = () => {
     }
 
     //to check if an order exists for the current listing,we are fectching the order
-    const fetchOrder = async () => {
+    const fetchActiveOrder = async () => {
         try {
             const response = await axios.get(`/getActiveOrder/${id}`, {
                 headers: {
@@ -68,8 +70,31 @@ const ViewListing = () => {
                 }
 
             )
-            console.log('OrderResponse', response.data.order)
-            setOrder(response.data.order)
+            console.log('ActiveOrderResponse', response.data.ActiveOrder)
+            setActiveOrder(response.data.ActiveOrder)
+        }
+        catch (err) {
+            console.log(err)
+        }
+    }
+
+    const checkUserOrdered = async () => {
+        try {
+            console.log('rerere')
+            const response = await axios.get(`/checkUserOrdered/${id}`, {
+                headers: {
+                    'token': `Bearer ${localStorage.getItem('userToken')} `
+                }
+            }, {
+                credentials: true
+            }
+
+            )
+            console.log('Im mad', response)
+            if (response.data.hasOrdered.length > 0) {
+                setHasOrdered(true)
+            }
+
         }
         catch (err) {
             console.log(err)
@@ -79,7 +104,8 @@ const ViewListing = () => {
     useEffect(() => {
         fetchListing()
         fetchProfile()
-        fetchOrder()
+        fetchActiveOrder()
+        checkUserOrdered()
     }, [])
 
     const { listing } = useSelector((state) => state.listing)
@@ -91,10 +117,12 @@ const ViewListing = () => {
     return (
         <div>
             <Navbar />
-            <div className="grid grid-cols-3 mx-32 gap-20">
-                <ListingDetails />
-                < ListingPricing order={order} />
-            </div>
+            {listing && (
+                <div className="grid grid-cols-3 mx-32 gap-20">
+                    <ListingDetails hasOrdered={hasOrdered} />
+                    < ListingPricing ActiveOrder={activeOrder} />
+                </div>
+            )}
         </div >
     )
 }

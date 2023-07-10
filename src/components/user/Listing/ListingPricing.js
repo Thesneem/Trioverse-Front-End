@@ -8,8 +8,8 @@ import { useNavigate } from 'react-router-dom';
 import ChatModal from '../../modals/ChatModal';
 import axios from 'axios';
 
-const ListingPricing = ({ order }) => {
-    console.log('testing order', order)
+const ListingPricing = ({ ActiveOrder }) => {
+    console.log('testing order', ActiveOrder)
     const navigate = useNavigate();
     const { listing } = useSelector((state) => state.listing);
     const { user } = useSelector((state) => state.user);
@@ -60,29 +60,29 @@ const ListingPricing = ({ order }) => {
                     <h2 className="bg-[#1DBF73] text-white text-center py-2 px-4">Select Any Package</h2>
                     {listing?.packages?.map((item) => (
                         <div className="border p-10" key={item._id}>
-                            {item?.packageId?.package === order[0]?.selected_Package?.package ? (
+                            {item?.packageId?.package === ActiveOrder[0]?.selected_Package?.package && !(ActiveOrder[0]?.order_Status?.finished?.state || ActiveOrder[0]?.order_Status?.canceled?.state) ? (
                                 <div>
                                     <h1 className='mb-2 font-bold text-blue-700'>Already an order exist with below details</h1>
                                     <label className="flex items-center gap-3">
                                         <span className="font-bold">
-                                            {order[0]?.selected_Package?.package
+                                            {ActiveOrder[0]?.selected_Package?.package
                                                 .split('-')
                                                 .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
                                                 .join(' ')}
                                         </span>
-                                        <span className="ml-auto">${order[0].order_Price}</span>
+                                        <span className="ml-auto">${ActiveOrder[0].order_Price}</span>
                                     </label>
-                                    <p>{order[0]?.selected_Package?.shortDesc}</p>
-                                    <p>{order[0]?.selected_Package?.deliverables}</p>
+                                    <p>{ActiveOrder[0]?.selected_Package?.shortDesc}</p>
+                                    <p>{ActiveOrder[0]?.selected_Package?.deliverables}</p>
                                     <div>
                                         <div className="text-[#62646a] font-semibold text-sm flex gap-6">
                                             <div className="flex items-center gap-2">
                                                 <FiClock className="text-xl" />
-                                                <span>{order[0]?.selected_Package?.delivery_Time} Days Delivery</span>
+                                                <span>{ActiveOrder[0]?.selected_Package?.delivery_Time} Days Delivery</span>
                                             </div>
                                             <div className="flex items-center gap-2">
                                                 <FiRefreshCcw className="text-xl" />
-                                                <span>{order[0]?.selected_Package?.revisions} Revisions</span>
+                                                <span>{ActiveOrder[0]?.selected_Package?.revisions} Revisions</span>
                                             </div>
                                         </div>
                                         <ul></ul>
@@ -129,22 +129,23 @@ const ListingPricing = ({ order }) => {
                             <span>Edit</span>
                             <BiRightArrowAlt className="text-2xl absolute right-4" />
                         </button>
-                    ) : (
-                        listing?.listing_status === 'Available' && order.length === 0 && (
-                            <button
-                                className="flex items-center bg-[#1DBF73] text-white py-2 justify-center font-bold text-lg relative rounded w-full"
-                                disabled={!selectedPackage}
-                                onClick={() => handleContinue(selectedPackage, listing._id)}
-                            >
-                                <span>Continue</span>
-                                <BiRightArrowAlt className="text-2xl absolute right-4" />
-                            </button>
-                        )
+                    ) : null}
+                    {listing?.seller_id?._id !== user._id && ((listing?.listing_status === 'Available' && ActiveOrder.length === 0) || (ActiveOrder[0]?.order_Status?.finished?.state || ActiveOrder?.order_Status?.canceled?.state)) && (
+                        <button
+                            className="flex items-center bg-[#4e6158] text-white py-2 justify-center font-bold text-lg relative rounded w-full"
+                            disabled={!selectedPackage}
+                            onClick={() => handleContinue(selectedPackage, listing._id)}
+                        >
+                            <span>Continue</span>
+                            <BiRightArrowAlt className="text-2xl absolute right-4" />
+                        </button>
                     )}
+
+
                     {listing.seller_id !== user._id && (
                         <div className="flex items-center justify-center mt-5">
                             <button
-                                className="w-5/6 hover:bg-[#74767e] py-1 border border-[#74767e] px-5 text-[#6c6d75] hover:text-white transition-all duration-300 text-lg rounded font-bold"
+                                className="w-5/6 hover:bg-[rgb(116,118,126)] py-1 border border-[#74767e] px-5 text-[#6c6d75] hover:text-white transition-all duration-300 text-lg rounded font-bold"
                                 onClick={() => handleChatModal(listing.seller_id._id)}
                             >
                                 Contact Seller

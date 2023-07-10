@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import { BASE_URL } from '../../../config'
+import Reviews from './Reviews';
+import AddReview from './AddReview';
 
-const ListingDetails = () => {
+const ListingDetails = ({ hasOrdered }) => {
 
+    console.log('Means there is a finished order', hasOrdered)
     const { listing } = useSelector((state) => state.listing)
     console.log('hi redux', listing)
     const [currentImage, setCurrentImage] = useState("");
@@ -167,8 +170,8 @@ const ListingDetails = () => {
                             </div>
                         </div>
                     </div>
-                    Review part    {/* <Reviews />
-                {hasOrdered && <AddReview />} */}
+                    <Reviews />
+                    {hasOrdered ? (< AddReview />) : (null)}
                 </div >
             )}
         </>
