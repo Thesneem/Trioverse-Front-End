@@ -1,34 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { FaStar } from "react-icons/fa";
-import axios from 'axios'
-import { useSelector } from 'react-redux';
 import { BASE_URL } from '../../../config'
 
 
-const Reviews = () => {
-    const { listing } = useSelector((state) => state.listing)
-    const [reviews, setReviews] = useState([])
-    const [averageRatings, setAverageRatings] = useState("0");
-    const fetchReviews = async () => {
-        try {
-            const response = await axios.get(`/allReviews/${listing._id}`)
-            console.log('all reviews', response.data.reviews)
-            if (response.data.reviews.length > 0) {
-                let avgRating = 0;
-                response.data.reviews.forEach(({ rating }) => (avgRating += rating));
-                setAverageRatings((avgRating / response.data.reviews.length).toFixed(1));
-
-            }
-            setReviews(response.data.reviews)
-        }
-        catch (err) {
-            console.log(err)
-        }
-    }
-
-    useEffect(() => {
-        fetchReviews()
-    }, [listing])
+const Reviews = ({ reviews, averageRatings }) => {
 
     return (
         <>
@@ -54,12 +29,12 @@ const Reviews = () => {
                 </div>
                 <div className="flex flex-col gap-6">
                     {reviews.map((review) => (
-                        <div className="flex gap-3 border-t pt-6" key={review._id} >
+                        <div className="flex gap-3 border-t pt-6" key={review?._id} >
 
                             <div>
-                                {review.reviewer.profile_pic ? (
+                                {review?.reviewer?.profile_pic ? (
                                     <img
-                                        src={`${BASE_URL}/public/uploads/profilepics/${review?.reviewer.profile_pic}`}
+                                        src={`${BASE_URL}/public/uploads/profilepics/${review?.reviewer?.profile_pic}`}
                                         alt="Profile"
                                         width={40}
                                         height={40}
@@ -68,28 +43,28 @@ const Reviews = () => {
                                 ) : (
                                     <div className="bg-purple-500 h-10 w-10 flex items-center justify-center rounded-full relative">
                                         <span className="text-xl text-white">
-                                            {review.reviewer.email[0].toUpperCase()}
+                                            {review?.reviewer?.email?.toUpperCase()}
                                         </span>
                                     </div>
                                 )}
                             </div>
                             <div className="flex flex-col gap-2">
-                                <h4>{review.reviewer.userName}</h4>
+                                <h4>{review?.reviewer?.userName}</h4>
                                 <div className="flex text-yellow-500 items-center gap-2">
                                     <div className="flex gap-1">
                                         {[1, 2, 3, 4, 5].map((star) => (
                                             <FaStar
                                                 key={star}
-                                                className={`cursor-pointer ${review.rating >= star
+                                                className={`cursor-pointer ${review?.rating >= star
                                                     ? "text-yellow-400"
                                                     : "text-gray-300"
                                                     }`}
                                             />
                                         ))}
                                     </div>
-                                    <span>{review.rating}</span>
+                                    <span>{review?.rating}</span>
                                 </div>
-                                <p className="text-[#404145] pr-20">{review.review}</p>
+                                <p className="text-[#404145] pr-20">{review?.review}</p>
                             </div>
                         </div>
                     ))}

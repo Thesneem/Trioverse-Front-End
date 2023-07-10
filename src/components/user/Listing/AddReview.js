@@ -10,7 +10,7 @@ const initialValues = {
     review: '',
     rating: 0
 }
-const AddReview = () => {
+const AddReview = ({ onReviewAdded }) => {
     const [showAddReview, setShowAddReview] = useState(false)
     const { listing } = useSelector((state) => state.listing)
     console.log('llllll', listing)
@@ -23,7 +23,7 @@ const AddReview = () => {
 
     const addReview = async () => {
         try {
-            const response = await axios.post(`/addReview/${listing._id}`, { ...values }, {
+            const response = await axios.post(`/addReview/${listing?._id}`, { ...values }, {
                 headers: {
                     'token': `Bearer ${localStorage.getItem('userToken')} `
                 }
@@ -32,7 +32,10 @@ const AddReview = () => {
                 {
                     credentials: true
                 })
-            console.log(response)
+            console.log('addedddreview', response)
+            // Call the onReviewAdded function with the new review
+            onReviewAdded(response.data.newReview);
+
             setShowAddReview(false)
             toast.success('Review Added successfully')
 
@@ -46,7 +49,7 @@ const AddReview = () => {
     //we are checking if there is already exist a review by the current user, if so do not show add review part
     const checkReviewExist = async () => {
         try {
-            const response = await axios.get(`/isReviewExist/${listing._id}`, {
+            const response = await axios.get(`/isReviewExist/${listing?._id}`, {
                 headers: {
                     'token': `Bearer ${localStorage.getItem('userToken')} `
                 }

@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { BASE_URL } from '../../../config'
 import Reviews from './Reviews';
 import AddReview from './AddReview';
+import axios from 'axios'
 
 const ListingDetails = ({ hasOrdered }) => {
 
@@ -10,6 +11,42 @@ const ListingDetails = ({ hasOrdered }) => {
     const { listing } = useSelector((state) => state.listing)
     console.log('hi redux', listing)
     const [currentImage, setCurrentImage] = useState("");
+
+
+    const [reviews, setReviews] = useState([])
+    const [averageRatings, setAverageRatings] = useState("0");
+    const fetchReviews = async () => {
+        try {
+            const response = await axios.get(`/allReviews/${listing._id}`)
+            console.log('all reviews', response.data.reviews)
+            if (response.data.reviews.length > 0) {
+                let avgRating = 0;
+                response.data.reviews.forEach(({ rating }) => (avgRating += rating));
+                setAverageRatings((avgRating / response.data.reviews.length).toFixed(1));
+
+            }
+            setReviews(response.data.reviews)
+        }
+        catch (err) {
+            console.log(err)
+        }
+    }
+
+    const handleReviewAdded = (newReview) => {
+        // Update the reviews state with the new review
+        setReviews((prevReviews) => [...prevReviews, newReview]);
+
+        // Recalculate average ratings
+        let avgRating = 0;
+        const updatedReviews = [...reviews, newReview];
+        updatedReviews.forEach(({ rating }) => (avgRating += rating));
+        setAverageRatings((avgRating / updatedReviews.length).toFixed(1));
+    };
+
+    useEffect(() => {
+        fetchReviews()
+    }, [listing])
+
 
     useEffect(() => {
         if (listing) {
@@ -170,8 +207,8 @@ const ListingDetails = ({ hasOrdered }) => {
                             </div>
                         </div>
                     </div>
-                    <Reviews />
-                    {hasOrdered ? (< AddReview />) : (null)}
+                    <Reviews reviews={reviews} averageRatings={averageRatings} />
+                    {hasOrdered ? (< AddReview onReviewAdded={handleReviewAdded} />) : (null)}
                 </div >
             )}
         </>
