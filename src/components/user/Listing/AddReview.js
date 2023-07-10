@@ -6,16 +6,24 @@ import { useSelector } from 'react-redux';
 import { useFormik } from 'formik'
 import { reviewSchema } from '../../../formSchemas/reviewSchema';
 
+const initialValues = {
+    review: '',
+    rating: 0
+}
 const AddReview = () => {
     const [showAddReview, setShowAddReview] = useState(false)
-    //const [reviewExist, setReviewExist] = useState(false)
-    const [reviewData, setReviewData] = useState({ review: "", rating: 0 });
-
     const { listing } = useSelector((state) => state.listing)
+    console.log('llllll', listing)
+    const { values, errors, touched, handleBlur, handleChange, setFieldValue } =
+        useFormik({
+            initialValues,
+            validationSchema: reviewSchema,
+
+        });
 
     const addReview = async () => {
         try {
-            const response = await axios.post(`/addReview/${listing._id}`, { ...reviewData }, {
+            const response = await axios.post(`/addReview/${listing._id}`, { ...values }, {
                 headers: {
                     'token': `Bearer ${localStorage.getItem('userToken')} `
                 }
@@ -35,7 +43,7 @@ const AddReview = () => {
         }
     }
 
-    //we are chec king if there is already exist a review by the current user, if so do not show add review part
+    //we are checking if there is already exist a review by the current user, if so do not show add review part
     const checkReviewExist = async () => {
         try {
             const response = await axios.get(`/isReviewExist/${listing._id}`, {
@@ -74,21 +82,29 @@ const AddReview = () => {
                         </h3>
                         <div className="flex  flex-col  items-start justify-start gap-3">
                             <textarea
-                                name="reviewText"
-                                id="reviewText"
-                                onChange={(e) => setReviewData({ ...reviewData, review: e.target.value })}
-                                value={reviewData.review}
+                                name="review"
+                                id="review"
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                value={values.review}
                                 className="block p-2.5 w-4/6 text-sm text-gray-900 bg-gray-50 rounded border border-gray-300 focus:ring-blue-500 focus:border-blue-500 "
                                 placeholder="Add Review"
                                 required
-                            ></textarea>
+                            />
+                            {errors.review && touched.review ? (
+                                <p className="form-error text-red-500">{errors.review}</p>
+                            ) : null}
+                            {/* </textarea> */}
+
                             <div className="flex gap-1">
                                 {[1, 2, 3, 4, 5].map((num) => (
                                     <FaStar
                                         key={num}
-                                        className={`cursor-pointer ${reviewData.rating >= num ? "text-yellow-400" : "text-gray-300"
+                                        className={`cursor-pointer ${values.rating >= num ? "text-yellow-400" : "text-gray-300"
                                             }`}
-                                        onClick={() => setReviewData({ ...reviewData, rating: num })}
+                                        onClick={() => setFieldValue(
+                                            'rating', num
+                                        )}
                                     />
                                 ))}
                             </div>
