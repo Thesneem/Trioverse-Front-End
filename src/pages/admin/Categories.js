@@ -260,6 +260,7 @@ const Categories = () => {
                 values={values}
                 errors={errors}
                 touched={touched}
+                setFieldValue={setFieldValue}
                 handleAddCategory={handleAddCategory}
                 handleCloseCategoryModal={handleCloseCategoryModal}
 
