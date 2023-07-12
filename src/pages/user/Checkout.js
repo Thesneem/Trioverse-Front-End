@@ -67,18 +67,21 @@ const Checkout = () => {
     // }, [])
 
     useEffect(() => {
-        try {
-            const res = axios.get(`/stripe/publish_key`)
-            console.log('TEST Stripe', res)
-            if (res.data.result) {
-                setStripePromise(loadStripe(res.data.result))
-                createOrderIntent()
+        const fetchStripePublishKey = async () => {
+            try {
+                const res = await axios.get('/stripe/publish_key');
+                console.log('TEST Stripe', res);
+                if (res.data.result) {
+                    setStripePromise(loadStripe(res.data.result));
+                    // createOrderIntent()
+                }
+            } catch (err) {
+                console.log(err);
             }
-        }
-        catch (err) {
-            console.log(err
-        }
-    })
+        };
+
+        fetchStripePublishKey();
+    }, []);
 
     // useEffect(() => {
     //     console.log('STRIPEPROMISE', stripePromise)
