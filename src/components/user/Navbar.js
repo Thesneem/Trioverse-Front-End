@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import toast, { Toaster } from 'react-hot-toast';
 
 
@@ -22,6 +22,8 @@ const Navbar = () => {
         toast.success("You have been logged out!")
     };
 
+    const location = useLocation();
+
     return (
         <div>
             {/* Navbar goes here */}
@@ -38,10 +40,34 @@ const Navbar = () => {
                             </div>
                             {/* Primary Navbar items */}
                             <div className="hidden md:flex items-center space-x-1">
-                                <Link to="/" className="py-4 px-2 text-green-500 border-b-4 border-green-500 font-semibold ">Home</Link>
-                                <Link to="/browse" className="py-4 px-2 text-gray-500 font-semibold hover:text-green-500 transition duration-300">Browse Categories</Link>
-                                <Link to="/sellerprofile" className="py-4 px-2 text-gray-500 font-semibold hover:text-green-500 transition duration-300">Become a Seller</Link>
-                                <Link to="/overview" className="py-4 px-2 text-gray-500 font-semibold hover:text-green-500 transition duration-300">Account Overview</Link>
+                                <Link
+                                    to="/"
+                                    className={`py-4 px-2 text-green-500 border-b-4 font-semibold ${location.pathname === '/' ? 'border-green-500' : 'border-transparent'
+                                        }`}
+                                >
+                                    Home
+                                </Link>
+                                <Link
+                                    to="/browse"
+                                    className={`py-4 px-2 text-gray-500 font-semibold hover:text-green-500 transition duration-300 ${location.pathname === '/browse' ? 'text-green-500' : ''
+                                        }`}
+                                >
+                                    Browse Categories
+                                </Link>
+                                <Link
+                                    to="/sellerprofile"
+                                    className={`py-4 px-2 text-gray-500 font-semibold hover:text-green-500 transition duration-300 ${location.pathname === '/sellerprofile' ? 'text-green-500' : ''
+                                        }`}
+                                >
+                                    Become a Seller
+                                </Link>
+                                <Link
+                                    to="/overview"
+                                    className={`py-4 px-2 text-gray-500 font-semibold hover:text-green-500 transition duration-300 ${location.pathname === '/overview' ? 'text-green-500' : ''
+                                        }`}
+                                >
+                                    Account Overview
+                                </Link>
                             </div>
                         </div>
                         {/* Secondary Navbar items */}
@@ -80,8 +106,8 @@ const Navbar = () => {
                 <div className="hidden mobile-menu">
                     <ul className="">
                         <li className="active"><Link to="/" className="block text-sm px-2 py-4 text-white bg-green-500 font-semibold">Home</Link></li>
-                        <li><Link to="#services" className="block text-sm px-2 py-4 hover:bg-green-500 transition duration-300">Browse Categories</Link></li>
-                        <li><Link to="#about" className="block text-sm px-2 py-4 hover:bg-green-500 transition duration-300">Become a Seller</Link></li>
+                        <li><Link to="/browse" className="block text-sm px-2 py-4 hover:bg-green-500 transition duration-300">Browse Categories</Link></li>
+                        <li><Link to="/sellerprofile" className="block text-sm px-2 py-4 hover:bg-green-500 transition duration-300">Become a Seller</Link></li>
                         <li><Link to="/overview" className="block text-sm px-2 py-4 hover:bg-green-500 transition duration-300">Account Overview</Link></li>
                     </ul>
                 </div>
@@ -93,3 +119,5 @@ const Navbar = () => {
 }
 
 export default Navbar
+
+

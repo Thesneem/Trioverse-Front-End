@@ -1,6 +1,6 @@
 import React from 'react'
 import Navbar from '../../components/user/Navbar'
-import { ArrowPathIcon } from '@heroicons/react/24/outline'
+import { TbArrowBadgeRightFilled } from "react-icons/tb";
 
 
 const Guide = () => {
@@ -24,7 +24,7 @@ const Guide = () => {
                                 <div className="relative pl-5 flex items-start">
                                     <dt className="text-base font-semibold leading-7 text-gray-900">
                                         <div className="absolute left-0 top-0 flex h-5 w-5 items-center justify-center rounded-lg bg-indigo-600">
-                                            <ArrowPathIcon className="h-4 w-4 text-white" aria-hidden="true" />
+                                            <TbArrowBadgeRightFilled className="h-4 w-4 text-white" aria-hidden="true" />
                                         </div>
                                     </dt>
                                     <dd className="ml-8 mt-1 text-base leading-7 text-gray-600">Every user is, by default, a buyer.User who provides/sells services/listings is called a Seller</dd>
@@ -32,7 +32,7 @@ const Guide = () => {
                                 <div className="relative pl-5 flex items-start">
                                     <dt className="text-base font-semibold leading-7 text-gray-900">
                                         <div className="absolute left-0 top-0 flex h-5 w-5 items-center justify-center rounded-lg bg-indigo-600">
-                                            <ArrowPathIcon className="h-4 w-4 text-white" aria-hidden="true" />
+                                            <TbArrowBadgeRightFilled className="h-4 w-4 text-white" aria-hidden="true" />
                                         </div>
                                     </dt>
                                     <dd className="ml-8 mt-1 text-base leading-7 text-gray-600">To become a seller, user has to submit seller profile. Admin will verify the profile</dd>
@@ -40,7 +40,7 @@ const Guide = () => {
                                 <div className="relative pl-5 flex items-start">
                                     <dt className="text-base font-semibold leading-7 text-gray-900">
                                         <div className="absolute left-0 top-0 flex h-5 w-5 items-center justify-center rounded-lg bg-indigo-600">
-                                            <ArrowPathIcon className="h-4 w-4 text-white" aria-hidden="true" />
+                                            <TbArrowBadgeRightFilled className="h-4 w-4 text-white" aria-hidden="true" />
                                         </div>
                                     </dt>
                                     <dd className="ml-8 mt-1 text-base leading-7 text-gray-600">A seller can create Listing with 3 different packages, basic, standard and permium. Each package will have different deliverables, revisions, delivery days and price.</dd>
@@ -48,7 +48,7 @@ const Guide = () => {
                                 <div className="relative pl-5 flex items-start">
                                     <dt className="text-base font-semibold leading-7 text-gray-900">
                                         <div className="absolute left-0 top-0 flex h-5 w-5 items-center justify-center rounded-lg bg-indigo-600">
-                                            <ArrowPathIcon className="h-4 w-4 text-white" aria-hidden="true" />
+                                            <TbArrowBadgeRightFilled className="h-4 w-4 text-white" aria-hidden="true" />
                                         </div>
                                     </dt>
                                     <dd className="ml-8 mt-1 text-base leading-7 text-gray-600">A buyer can browse the listings in variouse categories. He/she can chat with seller regarding the listing</dd>
@@ -56,7 +56,7 @@ const Guide = () => {
                                 <div className="relative pl-5 flex items-start">
                                     <dt className="text-base font-semibold leading-7 text-gray-900">
                                         <div className="absolute left-0 top-0 flex h-5 w-5 items-center justify-center rounded-lg bg-indigo-600">
-                                            <ArrowPathIcon className="h-4 w-4 text-white" aria-hidden="true" />
+                                            <TbArrowBadgeRightFilled className="h-4 w-4 text-white" aria-hidden="true" />
                                         </div>
                                     </dt>
                                     <dd className="ml-8 mt-1 text-base leading-7 text-gray-600">It is always recommended to chat with seller prior to order placement.</dd>
@@ -64,7 +64,7 @@ const Guide = () => {
                                 <div className="relative pl-5 flex items-start">
                                     <dt className="text-base font-semibold leading-7 text-gray-900">
                                         <div className="absolute left-0 top-0 flex h-5 w-5 items-center justify-center rounded-lg bg-indigo-600">
-                                            <ArrowPathIcon className="h-4 w-4 text-white" aria-hidden="true" />
+                                            <TbArrowBadgeRightFilled className="h-4 w-4 text-white" aria-hidden="true" />
                                         </div>
                                     </dt>
                                     <dd className="ml-8 mt-1 text-base leading-7 text-gray-600">Select a package, give the requirements requested by the seller and do the secure payment.</dd>
@@ -72,7 +72,7 @@ const Guide = () => {
                                 <div className="relative pl-5 flex items-start">
                                     <dt className="text-base font-semibold leading-7 text-gray-900">
                                         <div className="absolute left-0 top-0 flex h-5 w-5 items-center justify-center rounded-lg bg-indigo-600">
-                                            <ArrowPathIcon className="h-4 w-4 text-white" aria-hidden="true" />
+                                            <TbArrowBadgeRightFilled className="h-4 w-4 text-white" aria-hidden="true" />
                                         </div>
                                     </dt>
                                     <dd className="ml-8 mt-1 text-base leading-7 text-gray-600">Once the order is placed, the Seller has to start working on the listing. Upon changing the status to Started, the countdown will start. </dd>
@@ -80,7 +80,7 @@ const Guide = () => {
                                 <div className="relative pl-5 flex items-start">
                                     <dt className="text-base font-semibold leading-7 text-gray-900">
                                         <div className="absolute left-0 top-0 flex h-5 w-5 items-center justify-center rounded-lg bg-indigo-600">
-                                            <ArrowPathIcon className="h-4 w-4 text-white" aria-hidden="true" />
+                                            <TbArrowBadgeRightFilled className="h-4 w-4 text-white" aria-hidden="true" />
                                         </div>
                                     </dt>
                                     <dd className="ml-8 mt-1 text-base leading-7 text-gray-600">The seller must deliver the product wihing the delivery days. Once delivered, the buyer can either accept or return for revision</dd>
@@ -88,7 +88,7 @@ const Guide = () => {
                                 <div className="relative pl-5 flex items-start">
                                     <dt className="text-base font-semibold leading-7 text-gray-900">
                                         <div className="absolute left-0 top-0 flex h-5 w-5 items-center justify-center rounded-lg bg-indigo-600">
-                                            <ArrowPathIcon className="h-4 w-4 text-white" aria-hidden="true" />
+                                            <TbArrowBadgeRightFilled className="h-4 w-4 text-white" aria-hidden="true" />
                                         </div>
                                     </dt>
                                     <dd className="ml-8 mt-1 text-base leading-7 text-gray-600">Once accepted, the order is considered as completed</dd>
@@ -96,7 +96,7 @@ const Guide = () => {
                                 <div className="relative pl-5 flex items-start">
                                     <dt className="text-base font-semibold leading-7 text-gray-900">
                                         <div className="absolute left-0 top-0 flex h-5 w-5 items-center justify-center rounded-lg bg-indigo-600">
-                                            <ArrowPathIcon className="h-4 w-4 text-white" aria-hidden="true" />
+                                            <TbArrowBadgeRightFilled className="h-4 w-4 text-white" aria-hidden="true" />
                                         </div>
                                     </dt>
                                     <dd className="ml-8 mt-1 text-base leading-7 text-gray-600">Tada!! Your work is done</dd>

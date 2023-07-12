@@ -47,18 +47,18 @@ export const DASHBOARD_SIDEBAR_LINKS = [
     //     path: '/listings',
     //     icon: <HiOutlineCube />
     // },
-    {
-        key: 'transactions',
-        label: 'Transactions',
-        path: '/transactions',
-        icon: <HiOutlineDocumentText />
-    },
-    {
-        key: 'accounts',
-        label: 'Accounts',
-        path: '/accounts',
-        icon: <HiCash />
-    },
+    // {
+    //     key: 'transactions',
+    //     label: 'Transactions',
+    //     path: '/transactions',
+    //     icon: <HiOutlineDocumentText />
+    // },
+    // {
+    //     key: 'accounts',
+    //     label: 'Accounts',
+    //     path: '/accounts',
+    //     icon: <HiCash />
+    // },
     {
         key: 'categories',
         label: 'Categories',
@@ -78,12 +78,12 @@ export const DASHBOARD_SIDEBAR_LINKS = [
         icon: <HiFlag />
     },
 
-    {
-        key: 'banners',
-        label: 'Banners',
-        path: '/banners',
-        icon: <HiOutlinePhotograph />
-    },
+    // {
+    //     key: 'banners',
+    //     label: 'Banners',
+    //     path: '/banners',
+    //     icon: <HiOutlinePhotograph />
+    // },
     {
         key: 'salesReport',
         label: 'Sales Report',
