@@ -67,14 +67,19 @@ const Checkout = () => {
     // }, [])
 
     useEffect(() => {
-        const fetchStripePublishKey = async () => {
+        const fetchStripePublishKey = () => {
             try {
-                const res = await axios.get('/stripe/publish_key');
-                console.log('TEST Stripe', res);
-                if (res.data.result) {
-                    setStripePromise(loadStripe(res.data.result));
-                    // createOrderIntent()
-                }
+                axios.get('/stripe/publish_key')
+                    .then(res => {
+                        console.log('TEST Stripe', res);
+                        if (res.data.result) {
+                            setStripePromise(loadStripe(res.data.result));
+                            // createOrderIntent()
+                        }
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
             } catch (err) {
                 console.log(err);
             }
@@ -82,6 +87,7 @@ const Checkout = () => {
 
         fetchStripePublishKey();
     }, []);
+
 
     // useEffect(() => {
     //     console.log('STRIPEPROMISE', stripePromise)
