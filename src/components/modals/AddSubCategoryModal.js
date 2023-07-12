@@ -27,7 +27,7 @@ const AddSubCategoryModal = ({ showSubCategoryModal, handleBlur, handleChange, v
                                             autoComplete="country-name" className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600  sm:text-sm sm:leading-6">
                                             <option value="">Select parent Category</option>
                                             {categories.map((category) => (
-                                                <option key={category._id} value={category.category} > {category.category}</option>
+                                                <option key={category._id} value={category.category} > {category.category.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ')}</option>
                                             )
 
                                             )

@@ -10,7 +10,6 @@ const Navbar = () => {
     useEffect(() => {
 
         const jwt = localStorage.getItem('userToken')
-        console.log("hitoken", jwt)
         if (jwt) {
             setIsLoggedIn(true)
         }
@@ -23,6 +22,7 @@ const Navbar = () => {
     };
 
     const location = useLocation();
+    console.log(location.pathname)
 
     return (
         <div>

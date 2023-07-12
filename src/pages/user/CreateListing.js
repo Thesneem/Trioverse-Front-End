@@ -267,7 +267,7 @@ const CreateListing = () => {
                                     <option value=''>Select Category</option>
                                     {categories.map(({ category, _id }) => (
                                         <option key={_id} value={_id}>
-                                            {category}
+                                            {category.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ')}
                                         </option>
                                     ))}
                                 </select>

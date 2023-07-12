@@ -184,26 +184,6 @@ const ListingDetails = ({ hasOrdered }) => {
                                         {listing?.seller_id.about}
                                     </p>
                                 </div>
-                                <div className="flex items-center gap-1">
-                                    <div className="flex text-yellow-500">
-                                        Seller Rating   {/* {[1, 2, 3, 4, 5].map((star) => (
-                                        <FaStar
-                                            key={star}
-                                            className={`cursor - pointer ${
-                            Math.ceil(gigData.averageRating) >= star
-                                ? "text-yellow-400"
-                                : "text-gray-300"
-                        }`}
-                                        />
-                                    ))} */}
-                                    </div>
-                                    <span className="text-yellow-500">
-                                        GgRating {/* {gigData.averageRating} */}
-                                    </span>
-                                    <span className="text-[#74767e]">
-                                        No.or gig review{/* ({gigData.totalReviews}) */}
-                                    </span>
-                                </div>
                             </div>
                         </div>
                     </div>

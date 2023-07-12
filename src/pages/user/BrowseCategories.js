@@ -364,12 +364,12 @@ const BrowseCategories = () => {
                                     className="max-w-[300px] flex flex-col gap-2 p-1 cursor-pointer mb-8"
                                     onClick={() => handleClick(listing._id)}
                                 >
-                                    <div className="relative w-64 h-40">
+                                    <div className="relative w-64 h-40 mb-3">
                                         <img
                                             src={`${BASE_URL}/public/uploads/listingImages/${listing?.images[0]}`}
                                             alt="gig"
                                             fill
-                                            className="rounded-xl"
+                                            className="rounded-xl w-full h-full object-cover"
                                         />
                                     </div>
                                     <div className="flex items-center gap-2">
