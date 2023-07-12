@@ -5,17 +5,7 @@ import {
     useStripe,
     useElements
 } from "@stripe/react-stripe-js";
-// import jwtDecode from "jwt-decode";
 
-// // Get the JWT token from the local storage
-// const token = localStorage.getItem("jwtToken");
-// // Decode the JWT token
-// if (token) {
-//     const decodedToken = jwtDecode(token);
-//     console.log(decodedToken);
-//     // Access the decoded token properties as needed
-
-// }
 
 export default function CheckoutForm() {
     const stripe = useStripe();

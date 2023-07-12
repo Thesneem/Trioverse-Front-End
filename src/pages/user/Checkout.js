@@ -54,7 +54,7 @@ const Checkout = () => {
 
         axios.get(`/stripe/publish_key`)
             .then((res) => {
-                console.log(res.data.result)
+                console.log('HEYY', res.data.result)
                 setStripePromise(loadStripe(res.data.result))
                 createOrderIntent()
             })
