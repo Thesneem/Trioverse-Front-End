@@ -233,9 +233,9 @@ const AccountOverview = () => {
 
                                 <div class="p-4 sm:ml-64">
                                     <div class="grid grid-cols-3 gap-4 mb-4">
-                                        <div class="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800 hover:bg-green-800 transition duration-300">
-                                            <p class="text-2xl text-gray-400 dark:text-gray-500 ">Change Password</p>
-                                        </div>
+                                        <Link to='/sellerListings'>  <div class="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800 hover:bg-green-800 transition duration-300">
+                                            <p class="text-2xl text-gray-400 dark:text-gray-500 ">Listings</p>
+                                        </div></Link>
 
                                         <Link to='/sellerprofile'><div class="flex items-center justify-center h-24 rounded bg-green-50 dark:bg-gray-800  hover:bg-green-800 transition duration-300" >
                                             < p class="text-2xl text-gray-400 dark:text-gray-500">Seller Profile</p>
@@ -254,9 +254,9 @@ const AccountOverview = () => {
                                         <Link to='/chatpage'> <div class="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800  hover:bg-green-800 transition duration-300">
                                             <p class="text-2xl text-gray-400 dark:text-gray-500">Chat</p>
                                         </div></Link>
-                                        <div class="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800  hover:bg-green-800 transition duration-300">
+                                        {/* <div class="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800  hover:bg-green-800 transition duration-300">
                                             <p class="text-2xl text-gray-400 dark:text-gray-500">Wallet</p>
-                                        </div>
+                                        </div> */}
                                     </div>
                                 </div>
                             </div>

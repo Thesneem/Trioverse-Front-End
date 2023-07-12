@@ -162,9 +162,9 @@ const Chatpage = () => {
                     </div>
 
                     {/* Right Side */}
-                    <div className="col-span-3 md:col-span-2">
+                    {/* <div className="col-span-3 md:col-span-2">
                         <Chatdetails />
-                    </div>
+                    </div> */}
                 </div >
             }
         </>
