@@ -26,9 +26,8 @@ const UserLogin = () => {
                     }, {
                         credentials: true
                     })
-                    console.log(response)
+
                     if (response.data.success) {
-                        console.log(response)
                         localStorage.setItem('userToken', response.data.userToken)
                         action.resetForm();
                         if (response.data.profileStat !== true) {

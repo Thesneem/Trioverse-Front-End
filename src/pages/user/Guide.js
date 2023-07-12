@@ -1,6 +1,6 @@
 import React from 'react'
 import Navbar from '../../components/user/Navbar'
-import { ArrowPathIcon, CloudArrowUpIcon, FingerPrintIcon, LockClosedIcon } from '@heroicons/react/24/outline'
+import { ArrowPathIcon } from '@heroicons/react/24/outline'
 
 
 const Guide = () => {

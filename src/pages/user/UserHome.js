@@ -28,7 +28,6 @@ const UserHome = () => {
 
                 }
             });
-            console.log(response)
             setCategories(response.data.categories.slice(0, 3));
         } catch (err) {
             console.log(err);
