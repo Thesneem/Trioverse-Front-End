@@ -105,10 +105,42 @@ const Navbar = () => {
                 {/* mobile menu */}
                 <div className="hidden mobile-menu">
                     <ul className="">
-                        <li className="active"><Link to="/" className="block text-sm px-2 py-4 text-white bg-green-500 font-semibold">Home</Link></li>
-                        <li><Link to="/browse" className="block text-sm px-2 py-4 hover:bg-green-500 transition duration-300">Browse Categories</Link></li>
-                        <li><Link to="/sellerprofile" className="block text-sm px-2 py-4 hover:bg-green-500 transition duration-300">Become a Seller</Link></li>
-                        <li><Link to="/overview" className="block text-sm px-2 py-4 hover:bg-green-500 transition duration-300">Account Overview</Link></li>
+                        <li className={location.pathname === '/' ? 'active' : ''}>
+                            <Link
+                                to="/"
+                                className={`block text-sm px-2 py-4 ${location.pathname === '/' ? 'text-white bg-green-500 font-semibold' : 'hover:bg-green-500 transition duration-300'
+                                    }`}
+                            >
+                                Home
+                            </Link>
+                        </li>
+                        <li className={location.pathname === '/browse' ? 'active' : ''}>
+                            <Link
+                                to="/browse"
+                                className={`block text-sm px-2 py-4 ${location.pathname === '/browse' ? 'text-white bg-green-500 font-semibold' : 'hover:bg-green-500 transition duration-300'
+                                    }`}
+                            >
+                                Browse Categories
+                            </Link>
+                        </li>
+                        <li className={location.pathname === '/sellerprofile' ? 'active' : ''}>
+                            <Link
+                                to="/sellerprofile"
+                                className={`block text-sm px-2 py-4 ${location.pathname === '/sellerprofile' ? 'text-white bg-green-500 font-semibold' : 'hover:bg-green-500 transition duration-300'
+                                    }`}
+                            >
+                                Become a Seller
+                            </Link>
+                        </li>
+                        <li className={location.pathname === '/overview' ? 'active' : ''}>
+                            <Link
+                                to="/overview"
+                                className={`block text-sm px-2 py-4 ${location.pathname === '/overview' ? 'text-white bg-green-500 font-semibold' : 'hover:bg-green-500 transition duration-300'
+                                    }`}
+                            >
+                                Account Overview
+                            </Link>
+                        </li>
                     </ul>
                 </div>
             </nav >
