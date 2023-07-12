@@ -50,19 +50,35 @@ const Checkout = () => {
         }
     }
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        axios.get(`/stripe/publish_key`)
-            .then((res) => {
-                console.log('HEYY', res.data.result)
+
+    //     axios.get(`/stripe/publish_key`)
+
+    //         .then((res) => {
+    //             console.log('HEYY', res.data.result)
+    //             setStripePromise(loadStripe(res.data.result))
+    //             createOrderIntent()
+    //         })
+    //         .catch((err) => {
+    //             console.log(err)
+    //         })
+
+    // }, [])
+
+    useEffect(() => {
+        try {
+            const res = axios.get(`/stripe/publish_key`)
+            console.log('TEST Stripe', res)
+            if (res.data.result) {
                 setStripePromise(loadStripe(res.data.result))
                 createOrderIntent()
-            })
-            .catch((err) => {
-                console.log(err)
-            })
-
-    }, [])
+            }
+        }
+        catch (err) {
+            console.log(err
+        }
+    })
 
     // useEffect(() => {
     //     console.log('STRIPEPROMISE', stripePromise)
