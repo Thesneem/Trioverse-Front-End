@@ -111,8 +111,8 @@ const Chatpage = () => {
 
     //for online status
     const checkOnlineStatus = (chat) => {
-        const chatMember = chat.members.find((member) => member !== currentUser._id);
-        const online = onlineUsers.find((user) => user.userId === chatMember);
+        const chatMember = chat?.members?.find((member) => member !== currentUser?._id);
+        const online = onlineUsers?.find((user) => user?.userId === chatMember);
         return online ? true : false;
     };
 

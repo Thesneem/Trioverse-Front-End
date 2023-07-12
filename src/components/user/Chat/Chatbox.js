@@ -13,7 +13,7 @@ const Chatbox = ({ chat, currentUser, setSendMessage, receivedMessage }) => {
 
 
     const getReceiver = () => {
-        const receiver = chat?.members?.find((member => member._id.toString() !== currentUser._id))
+        const receiver = chat?.members?.find((member => member?._id?.toString() !== currentUser?._id))
         console.log("RECEIVERRR", receiver)
         setReceiverData(receiver)
     }
@@ -60,13 +60,13 @@ const Chatbox = ({ chat, currentUser, setSendMessage, receivedMessage }) => {
     const handleSend = async (e) => {
         e.preventDefault()
         const message = {
-            senderId: currentUser._id,
+            senderId: currentUser?._id,
             text: newMessage,
-            chatId: chat._id,
+            chatId: chat?._id,
         }
         console.log('message', message)
-        const recepient = chat?.members?.find((member => member._id.toString() !== currentUser._id))
-        const receiverId = recepient._id
+        const recepient = chat?.members?.find((member => member?._id?.toString() !== currentUser?._id))
+        const receiverId = recepient?._id
         console.log('This is Receiver', receiverId)
 
         setSendMessage({ ...message, receiverId })
@@ -100,14 +100,14 @@ const Chatbox = ({ chat, currentUser, setSendMessage, receivedMessage }) => {
     useEffect(() => {
         scroll.current?.scrollIntoView({ behavior: "smooth" });
     }, [messages])
-        
+
 
 
 
     // Receive Message from parent component
     useEffect(() => {
         console.log("Message Arrived: ", receivedMessage)
-        if (receivedMessage !== null && receivedMessage.chatId === chat._id) {
+        if (receivedMessage !== null && receivedMessage?.chatId === chat?._id) {
             setMessages([...messages, receivedMessage]);
         }
 
@@ -129,14 +129,14 @@ const Chatbox = ({ chat, currentUser, setSendMessage, receivedMessage }) => {
                             <div className="follower flex items-center">
                                 <div>
                                     <img
-                                        src={`${BASE_URL}/public/uploads/profilepics/${receiverData.profile_pic}`}
+                                        src={`${BASE_URL}/public/uploads/profilepics/${receiverData?.profile_pic}`}
                                         alt="Profile"
                                         className="followerImage"
                                         style={{ width: "50px", height: "50px" }}
                                     />
                                     <div className="name text-sm">
                                         <span>
-                                            {receiverData?.userName ? receiverData.userName : `${receiverData.firstName} ${receiverData.lastName}`}
+                                            {receiverData?.userName ? receiverData?.userName : `${receiverData?.firstName} ${receiverData?.lastName}`}
                                         </span>
                                     </div>
                                 </div>
@@ -149,11 +149,11 @@ const Chatbox = ({ chat, currentUser, setSendMessage, receivedMessage }) => {
                                 <div
                                     ref={scroll}
                                     className={`message  text-black p-2 my-2  mx-2 max-w-xs w-fit flex flex-col gap-2 ${message.senderId === currentUser._id ? 'self-end bg-blue-200 rounded-tl-lg rounded-tr-lg rounded-bl-lg' : 'bg-yellow-200 rounded-tl-lg rounded-tr-lg rounded-br-lg'}`}
-                                    key={message._id}
+                                    key={message?._id}
                                 >
-                                    {message.text && <span>{message.text}</span>}{" "}
+                                    {message?.text && <span>{message?.text}</span>}{" "}
                                     <span className="text-xs text-textColor self-end w-fit">
-                                        {format(message.createdAt)}
+                                        {format(message?.createdAt)}
                                     </span>
                                 </div>
 
