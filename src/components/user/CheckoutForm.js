@@ -104,7 +104,7 @@ export default function CheckoutForm() {
         <form id="payment-form" onSubmit={handleSubmit} className="w-96">
             < LinkAuthenticationElement
                 id="link-authentication-element"
-                onChange={(e) => setEmail(e.target.value)}
+                onEmailChange={(e) => setEmail(e.target.value)}
 
             />
             < PaymentElement id="payment-element" options={paymentElementOptions} />
