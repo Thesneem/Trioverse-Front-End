@@ -9,14 +9,16 @@ import { HiPencilAlt } from "react-icons/hi";
 import AddCategoryModal from '../../components/modals/AddCategoryModal'
 import EditCategoryModal from '../../components/modals/EditCategoryModal'
 import BlockModal from '../../components/modals/BlockModal'
+import { BASE_URL } from '../../config'
 
 const initialValues = {
-    category: ''
+    category: '',
+    image: ''
 }
 
 const Categories = () => {
     const [showCategoryModal, setshowCategoryModal] = useState(false)
-    const [categories, setcategories] = useState([])
+    const [categories, setCategories] = useState([])
 
 
     const fetchCategories = async () => {
@@ -28,7 +30,7 @@ const Categories = () => {
                 }
             });
             console.log(response)
-            setcategories(response.data.categories);
+            setCategories(response.data.categories);
         } catch (err) {
             console.log(err);
         }
@@ -45,15 +47,18 @@ const Categories = () => {
 
     const handleAddCategory = async () => {
         try {
+            const formData = new FormData();
+            formData.append('category', values.category);
+            formData.append('image', values.image);
+            console.log(formData)
+            const response = await axios.post(`/admin/addCategory`,
+                formData
+                , {
+                    headers: {
+                        'token': `Bearer ${localStorage.getItem('adminToken')}`
 
-            const response = await axios.post(`/admin/addCategory`, {
-                ...values,
-            }, {
-                headers: {
-                    'token': `Bearer ${localStorage.getItem('adminToken')}`
-
-                }
-            }, {
+                    }
+                }, {
                 credentials: true
             }
             );
@@ -99,16 +104,19 @@ const Categories = () => {
     const handleEditCategory = async () => {
         try {
             console.log('HIII')
-
+            const formData = new FormData();
+            formData.append('category', values.category);
+            formData.append('image', values.image);
+            console.log(formData)
             console.log('Editcategory', selectedCategory)
-            const response = await axios.post(`/admin/editCategory/${selectedCategory}`, {
-                ...values,
-            }, {
-                headers: {
-                    'token': `Bearer ${localStorage.getItem('adminToken')}`
+            const response = await axios.post(`/admin/editCategory/${selectedCategory}`,
+                formData,
+                {
+                    headers: {
+                        'token': `Bearer ${localStorage.getItem('adminToken')}`
 
-                }
-            }, {
+                    }
+                }, {
                 credentials: true
             });
             console.log(response);
@@ -148,7 +156,7 @@ const Categories = () => {
         await fetchCategories()
     }
 
-    const { values, errors, touched, handleBlur, handleChange } =
+    const { values, errors, touched, handleBlur, handleChange, setFieldValue } =
         useFormik({
             initialValues,
             validationSchema: categorySchema,
@@ -161,6 +169,7 @@ const Categories = () => {
         fetchCategories();
     }, []);
 
+    console.log('ERROROS', errors)
     return (
         <div>
             <div className="bg-neutral-100 h-screen w-screen overflow-hidden flex flex-row">
@@ -196,7 +205,17 @@ const Categories = () => {
                                             {index + 1}
                                         </th>
                                         <td>
-                                            {category.category.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ')}
+                                            <div className="flex items-center space-x-3">
+                                                {category?.image && (
+                                                    <div className="mask mask-circle w-12 h-12 ">
+                                                        <img src={`${BASE_URL}/public/uploads/profilepics/${category?.image}`} alt='Avatar' className="w-full h-full rounded-full object-cover" />
+
+                                                    </div>
+                                                )}
+                                                <div>
+                                                    {category.category.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ')}
+                                                </div>
+                                            </div>
                                         </td>
                                         <td>
                                             {category.subcategories.map((subCategory) => (
@@ -256,6 +275,7 @@ const Categories = () => {
                 values={values}
                 errors={errors}
                 touched={touched}
+                setFieldValue={setFieldValue}
                 handleEditCategory={handleEditCategory}
                 handleCloseEditCategoryModal={handleCloseEditCategoryModal}
 

@@ -2,7 +2,7 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useFormik } from 'formik'
 import { loginSchema } from '../../formSchemas/loginSchema'
-import { ToastContainer, toast } from 'react-toastify'
+import { Toaster, toast } from 'react-hot-toast'
 
 import axios from 'axios'
 
@@ -30,12 +30,15 @@ const AdminLogin = () => {
                     console.log(response, 'hi')
 
                     localStorage.setItem('adminToken', response.data.adminToken)
-                    toast.success(response.data.message, {
-                        onClose: () => {
-                            action.resetForm();
-                            navigate('/admin/dashBoard');
-                        }
-                    })
+                    // toast.success(response.data.message, {
+                    //     onClose: () => {
+                    //         action.resetForm();
+                    //         navigate('/admin/dashboard');
+                    //     }
+                    // })
+                    toast.success(response.data.message)
+                    action.resetForm()
+                    navigate('/admin/dashboard')
 
 
                 }
@@ -47,6 +50,7 @@ const AdminLogin = () => {
 
             },
         });
+
     // console.log(
     //     "errors",
     //     errors
@@ -67,7 +71,7 @@ const AdminLogin = () => {
                 <div className="flex flex-col justify-center items-center h-full">
 
                     <div className='w-full lg:w-3/6'>
-                        <ToastContainer position="top-center" />
+                        <Toaster position="top-center" />
                         <h2 className='text-black font-medium text-2xl md:text-3xl py-5'>Admin Login</h2>
                         <form className='flex flex-col w-full items-start' onSubmit={handleSubmit}>
                             <div className='flex flex-col w-full py-3'>

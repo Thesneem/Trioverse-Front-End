@@ -20,7 +20,7 @@ export const DASHBOARD_SIDEBAR_LINKS = [
     {
         key: 'dashboard',
         label: 'Dashboard',
-        path: '/admin/dashBoard',
+        path: '/admin/dashboard',
         icon: <HiOutlineViewGrid />
     },
     {
@@ -77,12 +77,7 @@ export const DASHBOARD_SIDEBAR_LINKS = [
         path: '/admin/packages',
         icon: <HiFlag />
     },
-    {
-        key: 'coupons',
-        label: 'Coupons',
-        path: '/coupons',
-        icon: <HiOutlineTicket />
-    },
+
     {
         key: 'banners',
         label: 'Banners',
@@ -92,7 +87,7 @@ export const DASHBOARD_SIDEBAR_LINKS = [
     {
         key: 'salesReport',
         label: 'Sales Report',
-        path: '/salesReport',
+        path: '/admin/salesReport',
         icon: <HiOutlineDocumentReport />
     }
 ]
@@ -104,10 +99,10 @@ export const DASHBOARD_SIDEBAR_BOTTOM_LINKS = [
     // path: '/settings',
     // icon: <HiOutlineCog />
     // },
-    {
-        key: 'support',
-        label: 'Help & Support',
-        path: '/support',
-        icon: <HiOutlineQuestionMarkCircle />
-    }
+    // {
+    //     key: 'support',
+    //     label: 'Help & Support',
+    //     path: '/support',
+    //     icon: <HiOutlineQuestionMarkCircle />
+    // }
 ]

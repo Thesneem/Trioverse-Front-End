@@ -1,7 +1,12 @@
 
 import React from 'react'
 
-const EditCategoryModal = ({ showEditCategoryModal, handleBlur, handleChange, values, errors, touched, handleEditCategory, handleCloseEditCategoryModal }) => {
+const EditCategoryModal = ({ showEditCategoryModal, handleBlur, handleChange, values, errors, setFieldValue, touched, handleEditCategory, handleCloseEditCategoryModal }) => {
+
+    const handleImageChange = (event) => {
+        const file = event.target.files[0];
+        setFieldValue('image', file);
+    };
     return (
         <div>
             {
@@ -31,6 +36,15 @@ const EditCategoryModal = ({ showEditCategoryModal, handleBlur, handleChange, va
                                                 <p className="form-error text-red-500">{errors.category}</p>
                                             ) : null}
                                         </div>
+                                        <input type="file" name='image'
+                                            className="file-input file-input-bordered file-input-xs w-full max-w-xs"
+                                            accept='image/jpeg, image/png, image/gif, image/jpg'
+                                            onChange={handleImageChange}
+                                        />
+                                        {errors.image && touched.image ? (
+                                            <p className="form-error text-red-500">{errors.image}</p>
+                                        ) : null}
+
                                     </div>
                                 </div>
                                 <div className="mt-5 sm:mt-6">

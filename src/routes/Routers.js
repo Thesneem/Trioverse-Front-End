@@ -22,6 +22,7 @@ import Checkout from '../pages/user/Checkout';
 import OrderSuccessPage from '../pages/user/OrderSuccessPage';
 import BuyOrders from '../pages/user/BuyOrders';
 import ViewOrder from '../pages/user/ViewOrder'
+import Guide from '../pages/user/Guide';
 import UserPrivateRoutes from '../privateRoutes/UserPrivateRoutes';
 
 import AdminLogin from '../pages/admin/AdminLogin';
@@ -36,6 +37,7 @@ import TestTable from '../components/user/TestTable';
 import BrowseCategories from '../pages/user/BrowseCategories';
 import AddRequirements from '../pages/user/AddRequirements';
 import SellOrders from '../pages/user/SellOrders';
+import SalesReport from '../pages/admin/SalesReport';
 
 
 
@@ -55,6 +57,7 @@ const Routers = () => {
                 <Route exact path='/kshome' element={<ProjectForm />} />
                 <Route exact path='/browse' element={<BrowseCategories />} />
                 <Route excat path='/viewListing/:id' element={<ViewListing />} />
+                <Route excat path='/quickguide' element={<Guide />} />
 
                 <Route exact element={<UserPrivateRoutes type="user" />}>
                     <Route exact path='/account' element={<Profile />} />
@@ -77,16 +80,16 @@ const Routers = () => {
 
                 < Route exact path='/admin' element={<AdminLogin />} />
                 <Route exact element={<AdminPrivateRoutes type='admin' />}>
-                    <Route exact path='/admin/dashBoard' element={<AdminDashboard />} />
+                    <Route exact path='/admin/dashboard' element={<AdminDashboard />} />
                     <Route exact path='/admin/users' element={<Users />} />
                     <Route exact path='/admin/categories' element={<Categories />} />
                     <Route exact path='/admin/subcategories' element={<SubCategories />} />
                     <Route exact path='/admin/packages' element={<Packages />} />
                     <Route exact path='/admin/sellers' element={<Sellers />} />
+                    <Route exact path='/admin/salesReport' element={<SalesReport />} />
                 </Route>
             </Routes >
         </Router >
     )
 }
-
 export default Routers

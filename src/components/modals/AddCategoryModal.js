@@ -1,6 +1,11 @@
 import React from 'react';
 
-const AddCategoryModal = ({ showCategoryModal, handleBlur, handleChange, values, errors, touched, handleAddCategory, handleCloseCategoryModal }) => {
+const AddCategoryModal = ({ showCategoryModal, handleBlur, setFieldValue, handleChange, values, errors, touched, handleAddCategory, handleCloseCategoryModal }) => {
+
+    const handleImageChange = (event) => {
+        const file = event.target.files[0];
+        setFieldValue('image', file);
+    };
     return (
         <div>
             {showCategoryModal && (
@@ -29,6 +34,14 @@ const AddCategoryModal = ({ showCategoryModal, handleBlur, handleChange, values,
                                             <p className="form-error text-red-500">{errors.category}</p>
                                         ) : null}
                                     </div>
+                                    <input type="file" name='image'
+                                        className="file-input file-input-bordered file-input-xs w-full max-w-xs"
+                                        accept='image/jpeg, image/png, image/gif, image/jpg'
+                                        onChange={handleImageChange}
+                                    />
+                                    {errors.image && touched.image ? (
+                                        <p className="form-error text-red-500">{errors.image}</p>
+                                    ) : null}
                                 </div>
                             </div>
                             <div className="mt-5 sm:mt-6">

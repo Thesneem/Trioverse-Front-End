@@ -4,7 +4,7 @@ import { Outlet, Navigate } from 'react-router-dom'
 
 const AdminPrivateRoutes = ({ type }) => {
     // const Navigate = useNavigate()
-    let token = localStorage.getItem("adminToken") == null ? false : true;
+    let token = localStorage.getItem("adminToken") === null ? false : true;
     // const decode = jwtdecode(token)
 
     return (
