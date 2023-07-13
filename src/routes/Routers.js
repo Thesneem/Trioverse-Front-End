@@ -38,6 +38,7 @@ import BrowseCategories from '../pages/user/BrowseCategories';
 import AddRequirements from '../pages/user/AddRequirements';
 import SellOrders from '../pages/user/SellOrders';
 import SalesReport from '../pages/admin/SalesReport';
+import Orders from '../pages/admin/Orders'
 
 
 
@@ -87,6 +88,7 @@ const Routers = () => {
                     <Route exact path='/admin/packages' element={<Packages />} />
                     <Route exact path='/admin/sellers' element={<Sellers />} />
                     <Route exact path='/admin/salesReport' element={<SalesReport />} />
+                    <Route exact path='/admin/orders' element={<Orders />} />
                 </Route>
             </Routes >
         </Router >
