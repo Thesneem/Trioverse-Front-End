@@ -83,7 +83,7 @@ const Orders = () => {
 
                                             < tr key={order._id} >
                                                 <td>
-                                                    {order?.id}
+                                                    {order?._id}
                                                 </td>
                                                 <td>
                                                     <div className="flex items-center space-x-3">
@@ -105,10 +105,7 @@ const Orders = () => {
                                                     {order?.buyer_id?.userName}
                                                 </td>
                                                 <td>
-                                                    {order?.selected_Package?.package}
-                                                </td>
-                                                <td>
-                                                    {order?.order_Price}
+                                                    {order?.selected_Package?.package.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ')}
                                                 </td>
                                                 <td>
                                                     {order?.order_Price}
