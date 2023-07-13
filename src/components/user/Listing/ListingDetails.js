@@ -17,15 +17,15 @@ const ListingDetails = ({ hasOrdered }) => {
     const [averageRatings, setAverageRatings] = useState("0");
     const fetchReviews = async () => {
         try {
-            const response = await axios.get(`/allReviews/${listing._id}`)
+            const response = await axios.get(`/allReviews/${listing?._id}`)
             console.log('all reviews', response.data.reviews)
-            if (response.data.reviews.length > 0) {
+            if (response?.data?.reviews?.length > 0) {
                 let avgRating = 0;
-                response.data.reviews.forEach(({ rating }) => (avgRating += rating));
-                setAverageRatings((avgRating / response.data.reviews.length).toFixed(1));
+                response?.data?.reviews?.forEach(({ rating }) => (avgRating += rating));
+                setAverageRatings((avgRating / response?.data?.reviews?.length).toFixed(1));
 
             }
-            setReviews(response.data.reviews)
+            setReviews(response?.data?.reviews)
         }
         catch (err) {
             console.log(err)
@@ -39,8 +39,8 @@ const ListingDetails = ({ hasOrdered }) => {
         // Recalculate average ratings
         let avgRating = 0;
         const updatedReviews = [...reviews, newReview];
-        updatedReviews.forEach(({ rating }) => (avgRating += rating));
-        setAverageRatings((avgRating / updatedReviews.length).toFixed(1));
+        updatedReviews?.forEach(({ rating }) => (avgRating += rating));
+        setAverageRatings((avgRating / updatedReviews?.length).toFixed(1));
     };
 
     useEffect(() => {
@@ -66,7 +66,7 @@ const ListingDetails = ({ hasOrdered }) => {
                         <div>
 
                             <img
-                                src={`${BASE_URL}/public/uploads/profilepics/${listing?.seller_id.profile_pic}`}
+                                src={`${BASE_URL}/public/uploads/profilepics/${listing?.seller_id?.profile_pic}`}
                                 alt="profile"
                                 height={50}
                                 width={50}
@@ -77,10 +77,10 @@ const ListingDetails = ({ hasOrdered }) => {
                         </div>
                         <div className="flex gap-2 items-center">
                             <h4 className="text-[#27272a] font-bold">
-                                {listing?.seller_id.firstName} {listing?.seller_id.lastName}
+                                {listing?.seller_id?.firstName} {listing?.seller_id?.lastName}
                             </h4>
                             <h6 className="text-[#74767e]">
-                                @{listing?.seller_id.userName}
+                                @{listing?.seller_id?.userName}
                             </h6>
                             <h6 className={`ml-8 ${listing?.listing_status === 'Available' ? 'text-green-500' : 'text-red-500'}`}>
                                 This listing is currently {listing?.listing_status}
@@ -163,7 +163,7 @@ const ListingDetails = ({ hasOrdered }) => {
                         <div className="flex gap-4">
                             <div>
                                 <img
-                                    src={`${BASE_URL}/public/uploads/profilepics/${listing?.seller_id.profile_pic}`}
+                                    src={`${BASE_URL}/public/uploads/profilepics/${listing?.seller_id?.profile_pic}`}
                                     alt="profile"
                                     height={50}
                                     width={50}
@@ -173,15 +173,15 @@ const ListingDetails = ({ hasOrdered }) => {
                             <div className="flex flex-col gap-1">
                                 <div className="flex  gap-2 items-center">
                                     <h4 className="font-medium text-lg">
-                                        {listing?.seller_id.firstName} {listing?.seller_id.lastName}
+                                        {listing?.seller_id?.firstName} {listing?.seller_id?.lastName}
                                     </h4>
                                     <span className="text-[#74767e]">
-                                        @{listing?.seller_id.userName}
+                                        @{listing?.seller_id?.userName}
                                     </span>
                                 </div>
                                 <div>
                                     <p>
-                                        {listing?.seller_id.about}
+                                        {listing?.seller_id?.about}
                                     </p>
                                 </div>
                             </div>

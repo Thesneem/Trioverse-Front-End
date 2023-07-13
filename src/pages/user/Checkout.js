@@ -74,7 +74,7 @@ const Checkout = () => {
                         console.log('TEST Stripe', res);
                         if (res.data.result) {
                             setStripePromise(loadStripe(res.data.result));
-                            // createOrderIntent()
+                            createOrderIntent()
                         }
                     })
                     .catch(err => {
