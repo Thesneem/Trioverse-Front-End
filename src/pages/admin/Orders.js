@@ -82,6 +82,7 @@ const Orders = () => {
                                         {orders?.map((order, index) => (
 
                                             < tr key={order._id} >
+                                                <td>{index + 1}</td>
                                                 <td>
                                                     {order?._id}
                                                 </td>
