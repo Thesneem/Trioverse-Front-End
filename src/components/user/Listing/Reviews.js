@@ -1,9 +1,18 @@
 import React from 'react'
 import { FaStar } from "react-icons/fa";
 import { BASE_URL } from '../../../config'
-
+import jwt_decode from 'jwt-decode';
+import { TfiTrash, TfiPencil } from "react-icons/tfi";
 
 const Reviews = ({ reviews, averageRatings }) => {
+    // Retrieve the JWT token from local storage
+    const token = localStorage.getItem('userToken');
+
+    // Decode the JWT token
+    const decodedToken = jwt_decode(token);
+    const user = decodedToken.id
+    // Access the decoded token payload
+    console.log(typeof (user));
 
     return (
         <>
@@ -49,7 +58,12 @@ const Reviews = ({ reviews, averageRatings }) => {
                                 )}
                             </div>
                             <div className="flex flex-col gap-2">
-                                <h4>{review?.reviewer?.userName}</h4>
+                                <div className='flex gap-3'>
+                                    <span>{review?.reviewer?.userName}</span>
+                                    <div>
+                                        < TfiTrash /><span><TfiPencil /></span>
+                                    </div>
+                                </div>
                                 <div className="flex text-yellow-500 items-center gap-2">
                                     <div className="flex gap-1">
                                         {[1, 2, 3, 4, 5].map((star) => (
