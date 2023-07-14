@@ -61,7 +61,8 @@ const Reviews = ({ reviews, averageRatings }) => {
                                 <div className='flex gap-3'>
                                     <span>{review?.reviewer?.userName}</span>
                                     <div className='ml-auto'>
-                                        < TfiTrash /><span><TfiPencil /></span>
+                                        <TfiPencil />
+                                        < TfiTrash />
                                     </div>
                                 </div>
                                 <div className="flex text-yellow-500 items-center gap-2">
