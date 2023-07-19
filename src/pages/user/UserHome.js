@@ -8,10 +8,10 @@ const UserHome = () => {
 
     const [categories, setCategories] = useState([])
     const links = [
-        { name: 'Open freelancers', href: '#' },
-        { name: 'Variouse services', href: '#' },
-        { name: 'Seemsless functionality', href: '#' },
-        { name: 'Expert services', href: '#' },
+        { name: 'Open freelancers', },
+        { name: 'Variouse services', },
+        { name: 'Seemsless functionality', },
+        { name: 'Expert services', },
     ]
     const stats = [
         { name: 'Experts from worldwide', value: '12' },
@@ -148,10 +148,10 @@ const UserHome = () => {
                                 <img src={`${BASE_URL}/public/uploads/profilepics/${category?.image}`} alt={category.category} className="h-full w-full object-cover object-center" />
                             </div>
                             <h3 className="mt-6 text-sm text-gray-500">
-                                <Link to="/browse">
-                                    <span className="absolute inset-0"></span>
-                                    {category.category.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ')}
-                                </Link>
+                                {/* <Link to="/browse"> */}
+                                <span className="absolute inset-0"></span>
+                                {category.category.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ')}
+                                {/* </Link> */}
                             </h3>
                             <p className="text-base font-semibold text-gray-900">{category.description}</p>
                         </div>
@@ -160,7 +160,7 @@ const UserHome = () => {
                 </div >
 
                 <div className="flex justify-center ">
-                    <button className="btn bg-black text-white">Browse More</button>
+                    <Link to="/browse">  <button className="btn bg-black text-white">Browse More</button> </Link>
                 </div>
             </div >
 

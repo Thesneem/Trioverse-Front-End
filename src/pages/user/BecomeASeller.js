@@ -5,6 +5,7 @@ import axios from 'axios'
 import { useSelector, useDispatch } from 'react-redux'
 import { setUserDetails } from '../../redux/userSlice';
 import toast, { Toaster } from 'react-hot-toast';
+//import { createSellerSchema } from '../../formSchemas/createSellerSchema'
 
 
 
@@ -202,6 +203,10 @@ const BecomeASeller = () => {
                                 placeholder='Experience in years'
                                 onChange={handleChange}
                                 value={data.experience}
+                                min={0} // Minimum value
+                                max={30} // Maximum value
+                                required
+
                             />
                         </div>
                     </div >
@@ -273,7 +278,7 @@ const BecomeASeller = () => {
                     <div className="grid grid-cols-2 gap-11">
                         <div>
                             <label htmlFor="features" className={labelClassName}>
-                                Features
+                                Skills
                             </label>
                             <div className="flex gap-3 items-center mb-5">
                                 <input
@@ -284,6 +289,7 @@ const BecomeASeller = () => {
                                     name="feature"
                                     value={data.feature}
                                     onChange={handleChange}
+                                    required
                                 />
                                 <button
                                     type="button"
@@ -319,6 +325,7 @@ const BecomeASeller = () => {
                                 onChange={handleFileChange}
                                 className={inputClassName}
                                 accept="application/pdf,application/docx,application/doc"
+                                required
                             />
                         </div>
                     </div >
@@ -326,7 +333,8 @@ const BecomeASeller = () => {
                     <div>
                         <button
                             className="border   text-lg font-semibold px-5 py-3   border-[#1DBF73] bg-[#1DBF73] text-white rounded-md"
-                            type="button"
+                            // type="button"
+                            type='submit'
                             onClick={createSeller}
                         >
                             Create

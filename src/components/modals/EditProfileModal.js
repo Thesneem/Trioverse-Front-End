@@ -152,7 +152,7 @@ const EditProfileModal = ({
                                             name="firstName"
                                             onBlur={handleBlur}
                                             onChange={handleChange}
-                                            value={values.firstName}
+                                            value={values?.firstName}
                                         />
                                         {errors.firstName && touched.firstName ? (
                                             <p className="form-error text-red-500">{errors.firstName}</p>
@@ -167,7 +167,7 @@ const EditProfileModal = ({
                                             name="lastName"
                                             onBlur={handleBlur}
                                             onChange={handleChange}
-                                            value={values.lastName}
+                                            value={values?.lastName}
                                         />
                                         {errors.lastName && touched.lastName ? (
                                             <p className="form-error text-red-500">{errors.lastName}</p>
@@ -182,7 +182,7 @@ const EditProfileModal = ({
                                             name="userName"
                                             onBlur={handleBlur}
                                             onChange={handleChange}
-                                            value={values.userName}
+                                            value={values?.userName}
                                         />
                                         {errors?.userName && touched.userName ? (
                                             <p className="form-error text-red-500">{errors.userName}</p>
@@ -193,11 +193,11 @@ const EditProfileModal = ({
                                             className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                             id="place"
                                             type="text"
-                                            plcaeholder="Place"
+                                            placeholder="Place"
                                             name="place"
                                             onBlur={handleBlur}
                                             onChange={handleChange}
-                                            value={values.place}
+                                            value={values?.place}
                                         />
                                         {errors.place && touched.place ? (
                                             <p className="form-error text-red-500">{errors.place}</p>
@@ -212,7 +212,7 @@ const EditProfileModal = ({
                                             name="about"
                                             onBlur={handleBlur}
                                             onChange={handleChange}
-                                            value={values.about}
+                                            value={values?.about}
                                         />
                                         {errors.about && touched.about ? (
                                             <p className="form-error text-red-500">{errors.about}</p>

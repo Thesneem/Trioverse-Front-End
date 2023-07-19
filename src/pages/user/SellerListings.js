@@ -132,9 +132,9 @@ const SellerListings = () => {
                                                         <HiPencilSquare />
                                                     </button>
 
-                                                    <button className="btn-icon" title='Delete'  >
+                                                    {/* <button className="btn-icon" title='Delete'  >
                                                         < HiTrash />
-                                                    </button>
+                                                    </button> */}
 
                                                 </td>
 

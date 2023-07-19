@@ -10,6 +10,7 @@ import { setUserDetails } from '../../redux/userSlice';
 import toast, { Toaster } from 'react-hot-toast';
 import axios from 'axios'
 import EditProfileModal from '../../components/modals/EditProfileModal';
+import { HiPencilAlt } from "react-icons/hi";
 
 
 const AccountOverview = () => {
@@ -129,6 +130,7 @@ const AccountOverview = () => {
             console.log(response)
             if (response.data.type === 'Success') {
                 // action.resetForm();
+                setshowEditProfileModal(false);
                 toast.success('Profile has been updated')
             }
             else {
@@ -149,6 +151,29 @@ const AccountOverview = () => {
 
                     <Navbar />
                     <div className='flex-col justify-center text-center overflow-auto'>
+                        {!user?.isProfile_set && (
+                            <div classname='item-center'>
+                                <div className="flex justify-center alert alert-info text-center my-5 mx-6">
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        className="stroke-current shrink-0 w-6 h-6"
+                                    >
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth="2"
+                                            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                                        ></path>
+                                    </svg>
+                                    <span>
+                                        Please set your profile details with a profile picture!
+                                    </span>
+                                </div>
+                            </div>
+                        )}
+
                         <h1 className='text-green-800 text-4xl font-bold'>Account Overview</h1>
                         <Toaster />
                         <div className='flex flex-col sm:flex-row m-10 '>
@@ -159,36 +184,23 @@ const AccountOverview = () => {
                                     </div>
                                     <div className="flex justify-center items-center ">
                                         <div className="relative ">
-                                            {user && `${user?.profile_pic}` ? (
+                                            {user?.profile_pic ? (
                                                 < img
                                                     src={`${BASE_URL}/public/uploads/profilepics/${user?.profile_pic}`}
                                                     alt="profile"
                                                     fill
                                                     className="rounded-full w-24 h-24"
                                                 />) : (
+                                                <div className="bg-purple-500 h-10 w-10 flex items-center justify-center rounded-full relative">
+                                                    <span className="text-xl text-white">
+                                                        {user?.email[0]?.toUpperCase()}
 
-                                                <span className="text-6xl text-white">
-                                                    {user && `${user?.email}`}
-                                                </span>
+                                                    </span>
+                                                </div>
                                             )}
                                             {/* <img className="w-24 h-24 rounded-full" src="office.jpg" alt="Avatar" /> */}
-                                            <div className="absolute bottom-0 right-0 -mr-2 -mb-2 bg-white p-1 rounded-full" onClick={handleEditIconClick}>
-
-                                                <svg
-                                                    className="w-6 h-6 text-gray-500 hover:text-blue-500"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    fill="none"
-                                                    viewBox="0 0 24 24"
-                                                    stroke="currentColor"
-                                                >
-                                                    <path
-                                                        strokeLinecap="round"
-                                                        strokeLinejoin="round"
-                                                        strokeWidth="2"
-                                                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0zm-4.8-4.8a1.5 1.5 0 012.1 0l1.9 1.9-4 4-1.9-1.9a1.5 1.5 0 010-2.1zm4.8 4.8l4-4a1.5 1.5 0 10-2.1-2.1l-4 4 2.1 2.1z"
-                                                    />
-                                                </svg>
-
+                                            <div className="absolute bottom-0 right-0 -mr-2 -mb-2 bg-white p-1 rounded-full hover:cursor-pointer" onClick={handleEditIconClick} >
+                                                <HiPencilAlt />
                                             </div>
                                         </div>
                                     </div>
@@ -197,15 +209,15 @@ const AccountOverview = () => {
                                         <h2 className="card-title">FULLNAME: {user && `${user.firstName} ${user.lastName}`}</h2>
                                         <p>EMAIL: {user && `${user?.email}`}</p>
                                         <p>MOBILE: {user && `${user?.mobile}`}</p>
-                                        <p>USERNAME: {user && user.userName ? user.userName : 'Not updated'}</p>
-                                        <p>PLACE: {user && user.place ? user.place : 'Not Updated'}</p>
+                                        <p>USERNAME: {user && user.userName ? user.userName : <span className='text-red-500'>Not Updated</span>}</p>
+                                        <p>PLACE: {user && user.place ? user.place : <span className='text-red-500'>Not Updated</span>}</p>
                                         <div class="collapse bg-slate-200">
                                             <input type="checkbox" />
                                             <div class="collapse-title text-xl font-medium">
                                                 About
                                             </div>
                                             <div class="collapse-content">
-                                                <p>{user && user.about ? user.about : 'Not Updated'}</p>
+                                                <p>{user && user.about ? user.about : <span className='text-red-500'>Not Updated</span>}</p>
                                             </div>
                                         </div>
                                         <div className="card-actions">
@@ -226,31 +238,46 @@ const AccountOverview = () => {
                                 )
                                 } */}
                                 <div>
-                                    <Link to='/createListing'>
-                                        <button className='btn btn-success hover:btn-warning'>Create A Listing</button>
-                                    </Link>
+                                    {user?.isSellerProfile_set && (
+                                        <Link to='/createListing'>
+                                            <button className='btn btn-success hover:btn-warning'>Create A Listing</button>
+                                        </Link>
+                                    )}
                                 </div>
 
                                 <div class="p-4 sm:ml-64">
                                     <div class="grid grid-cols-3 gap-4 mb-4">
-                                        <Link to='/sellerListings'>  <div class="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800 hover:bg-green-800 transition duration-300">
-                                            <p class="text-2xl text-gray-400 dark:text-gray-500 ">Listings</p>
-                                        </div></Link>
 
-                                        <Link to='/sellerprofile'><div class="flex items-center justify-center h-24 rounded bg-green-50 dark:bg-gray-800  hover:bg-green-800 transition duration-300" >
-                                            < p class="text-2xl text-gray-400 dark:text-gray-500">Seller Profile</p>
-                                        </div></Link>
+                                        {user?.isSellerProfile_set && (
+                                            <>
+                                                <Link to='/sellerprofile'><div class="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800  hover:bg-green-800 transition duration-300" >
+                                                    < p class="text-2xl text-gray-400 dark:text-gray-500">Seller Profile</p>
+                                                </div>
+                                                </Link>
 
-                                        <div class="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800  hover:bg-green-800 transition duration-300">
-                                            <Link to='/buyOrders'><p class="text-2xl text-gray-400 dark:text-gray-500">My Buy Orders</p></Link>
-                                        </div>
+                                                <Link to='/sellerListings'>  <div class="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800 hover:bg-green-800 transition duration-300">
+                                                    <p class="text-2xl text-gray-400 dark:text-gray-500 ">Listings</p>
+                                                </div>
+                                                </Link>
+
+                                                <Link to='/sellOrders'>
+                                                    <div class="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800  hover:bg-green-800 transition duration-300">
+                                                        <p class="text-2xl text-gray-400 dark:text-gray-500">My Sell Orders</p>
+                                                    </div>
+                                                </Link>
+                                            </>
+                                        )}
+
+
                                     </div>
                                 </div>
                                 <div class="p-4 sm:ml-64">
                                     <div class="grid grid-cols-3 gap-4 mb-4">
-                                        <div class="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800  hover:bg-green-800 transition duration-300">
-                                            <Link to='/sellOrders'><p class="text-2xl text-gray-400 dark:text-gray-500">My Sell Orders</p></Link>
-                                        </div>
+                                        <Link to='/buyOrders'>
+                                            <div class="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800  hover:bg-green-800 transition duration-300">
+                                                <p class="text-2xl text-gray-400 dark:text-gray-500">My Buy Orders</p>
+                                            </div>
+                                        </Link>
                                         <Link to='/chatpage'> <div class="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800  hover:bg-green-800 transition duration-300">
                                             <p class="text-2xl text-gray-400 dark:text-gray-500">Chat</p>
                                         </div></Link>

@@ -4,6 +4,7 @@ import { Navigate, useLocation } from 'react-router-dom';
 import RequirementsAdd from '../../components/user/Requirements/RequirementsAdd';
 import SelectedDetails from '../../components/user/Requirements/SelectedDetails';
 import { useNavigate } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast'
 
 const AddRequirements = () => {
     const location = useLocation()
@@ -29,6 +30,7 @@ const AddRequirements = () => {
 
             <div>
                 < Navbar />
+                <Toaster />
                 <div className="grid grid-cols-3 mx-32 gap-20">
                     <RequirementsAdd />
                     < SelectedDetails selectedPackage={data?.packageId} />

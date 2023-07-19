@@ -56,7 +56,6 @@ const Routers = () => {
                 <Route exact path='/' element={<UserHome />} />
                 <Route exact path='/account' element={<TestTable />} />
                 <Route exact path='/kshome' element={<ProjectForm />} />
-                <Route exact path='/browse' element={<BrowseCategories />} />
                 <Route excat path='/viewListing/:id' element={<ViewListing />} />
                 <Route excat path='/quickguide' element={<Guide />} />
 
@@ -68,6 +67,7 @@ const Routers = () => {
                     {/* <Route path='/createListing' element={<AddListing />} /> */}
                     <Route exact path='/createListing' element={<CreateListing />} />
                     <Route exact path='/sellerListings' element={<SellerListings />} />
+                    <Route exact path='/browse' element={<BrowseCategories />} />
                     <Route exact path='/chatpage' element={<Chatpage />} />
                     <Route exact path='/addRequirements' element={<AddRequirements />} />
                     <Route exact path='/checkout' element={<Checkout />} />

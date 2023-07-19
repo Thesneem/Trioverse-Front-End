@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useFormik } from 'formik'
-import { ToastContainer, toast } from 'react-toastify'
+import { Toaster, toast } from 'react-hot-toast'
 import axios from 'axios'
 
 const initialValues = {
@@ -103,7 +103,7 @@ const Otp = () => {
                             <p>We have sent a code to your registered mobile</p>
                         </div>
                     </div>
-                    <ToastContainer />
+                    <Toaster />
 
                     <div>
                         <form onSubmit={handleSubmit}>

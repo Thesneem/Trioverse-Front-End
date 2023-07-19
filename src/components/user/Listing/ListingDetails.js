@@ -187,7 +187,7 @@ const ListingDetails = ({ hasOrdered }) => {
                             </div>
                         </div>
                     </div>
-                    <Reviews reviews={reviews} averageRatings={averageRatings} />
+                    <Reviews reviews={reviews} averageRatings={averageRatings} fetchReviews={fetchReviews} />
                     {hasOrdered ? (< AddReview onReviewAdded={handleReviewAdded} />) : (null)}
                 </div >
             )}

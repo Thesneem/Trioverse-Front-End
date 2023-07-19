@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom'
 import { useFormik } from 'formik'
 import { signUpSchema } from '../../formSchemas/signUpSchema'
 import axios from 'axios'
-import { ToastContainer, toast } from 'react-toastify'
+import { Toaster, toast } from 'react-hot-toast'
 
 
 const initialValues = {
@@ -54,7 +54,7 @@ const Signup = () => {
                     <h2 className="mb-6 text-2xl font-bold text-center text-gray-800">Sign Up</h2>
                     <form onSubmit={handleSubmit}>
 
-                        <ToastContainer />
+                        <Toaster />
                         <div className="mb-4 flex space-x-4">
                             <div className="w-1/2">
                                 <label htmlFor="firstName" className="block mb-2 text-sm font-medium text-gray-600">

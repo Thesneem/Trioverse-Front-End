@@ -1,10 +1,16 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { FaStar } from "react-icons/fa";
 import { BASE_URL } from '../../../config'
 import jwt_decode from 'jwt-decode';
 import { TfiTrash, TfiPencil } from "react-icons/tfi";
+import DeleteReviewModal from '../../modals/DeleteReviewModal';
+import axios from 'axios';
+import toast from 'react-hot-toast';
 
-const Reviews = ({ reviews, averageRatings }) => {
+const Reviews = ({ reviews, averageRatings, fetchReviews }) => {
+    const [showDeleteModal, setShowDeleteModal] = useState(false)
+    const [review, setReview] = useState(null)
+
     // Retrieve the JWT token from local storage
     const token = localStorage.getItem('userToken');
 
@@ -13,6 +19,38 @@ const Reviews = ({ reviews, averageRatings }) => {
     const user = decodedToken.id
     // Access the decoded token payload
     console.log(typeof (user));
+
+    const handleShowDeleteModal = (id) => {
+        setReview(id)
+        setShowDeleteModal(true)
+    }
+    const handleCloseDeleteModal = () => {
+        setShowDeleteModal(false)
+    }
+
+    const handleDeleteReview = async () => {
+        try {
+            console.log('values', review)
+            console.log(localStorage.getItem('userToken'))
+            const response = await axios.delete(`/deleteReview/${review}`, {
+                headers: {
+                    'token': `Bearer ${localStorage.getItem('userToken')}`,
+                }
+            },
+                {
+                    credentials: true
+                })
+
+            if (response.data.success === true) {
+                toast.success('Review deleted Successfully')
+                fetchReviews()
+            }
+        }
+        catch (err) {
+            console.log(err)
+            toast.error('Something went wrong.Could not delete')
+        }
+    }
 
     return (
         <>
@@ -60,10 +98,10 @@ const Reviews = ({ reviews, averageRatings }) => {
                             <div className="flex flex-col gap-2">
                                 <div className='flex gap-3'>
                                     <span>{review?.reviewer?.userName}</span>
-                                    <div className='ml-auto'>
+                                    {/* <div className='flex gap-2 ml-auto'>
                                         <TfiPencil />
-                                        < TfiTrash />
-                                    </div>
+                                        <span onClick={() => handleShowDeleteModal(review?._id)}> < TfiTrash /></span>
+                                    </div> */}
                                 </div>
                                 <div className="flex text-yellow-500 items-center gap-2">
                                     <div className="flex gap-1">
@@ -85,7 +123,11 @@ const Reviews = ({ reviews, averageRatings }) => {
                     ))}
                 </div>
             </div >
-
+            <DeleteReviewModal
+                showDeleteModal={showDeleteModal}
+                handleCloseDeleteModal={handleCloseDeleteModal}
+                handleDeleteReview={handleDeleteReview}
+            />
         </>
     )
 }

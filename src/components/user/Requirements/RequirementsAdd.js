@@ -4,6 +4,7 @@ import { requirmentSchema } from '../../../formSchemas/requirmentSchema';
 import { useFormik } from 'formik'
 import { useSelector, useDispatch } from 'react-redux';
 import { setRequirement, setFile } from '../../../redux/requirementsSlice';
+import toast, { Toaster } from 'react-hot-toast'
 
 const initialValues = {
     requirement: '',
@@ -53,6 +54,7 @@ const RequirementsAdd = () => {
         onSubmit: (values, action) => {
             dispatch(setRequirement(values.requirement));
             dispatch(setFile(values.attachement));
+            toast.success('Requirements added')
 
         }
 

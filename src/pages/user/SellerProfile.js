@@ -49,7 +49,7 @@ const SellerProfile = () => {
             </div>
 
             <div className="flex justify-center text-center m-5">
-                {user?.sellerProfileStatus.pending_Approval.state && (!user.sellerProfileStatus.approved.state && !user.sellerProfileStatus.rejected.state) && (
+                {user?.sellerProfileStatus?.pending_Approval?.state && (!user?.sellerProfileStatus?.approved?.state && !user?.sellerProfileStatus?.rejected?.state) && (
                     <div className="flex justify-center alert alert-info text-center">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -124,7 +124,7 @@ const SellerProfile = () => {
                 <div className='text-center'>
                     <h2 className="text-3xl font-bold mb-4">Seller Profile</h2>
                 </div>
-                <div className="bg-purple-500 h-36 w-36 flex items-center justify-center rounded-full relative" >
+                {/* <div className="bg-purple-500 h-36 w-36 flex items-center justify-center rounded-full relative" >
                     {user && `${user.profile_pic} ` ? (
                         < img
                             src={`${BASE_URL}/public/uploads/profilepics/${user.profile_pic}`}
@@ -136,6 +136,22 @@ const SellerProfile = () => {
                         <span className="text-6xl text-white">
                             {user && `${user.email} `}
                         </span>
+                    )}
+                </div> */}
+                <div classname='h-36 w-36 flex items-center justify-center rounded-full relative'>
+                    {user?.profile_pic ? (
+                        < img
+                            src={`${BASE_URL}/public/uploads/profilepics/${user?.profile_pic}`}
+                            alt="profile"
+                            fill
+                            className="rounded-full w-24 h-24"
+                        />) : (
+                        <div className="bg-purple-500 h-10 w-10 flex items-center justify-center rounded-full relative">
+                            <span className="text-xl text-white">
+                                {user?.email[0]?.toUpperCase()}
+
+                            </span>
+                        </div>
                     )}
                 </div>
 
